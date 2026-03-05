@@ -2,9 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Box, Flex, Text, Heading, Section, Container, Card } from "@radix-ui/themes";
 import { DoubleArrowLeftIcon, DoubleArrowRightIcon } from "@radix-ui/react-icons";
 
-// ==========================================
-// 1. Integration Option Item (Child Component)
-// ==========================================
 
 export interface IntegrationOptionItemProps {
   integrationLogoUrl: string;
@@ -23,7 +20,7 @@ export const IntegrationOptionItem = ({
     <Box
       asChild
       style={{
-        display: "inline-flex", // Keeps items in a row
+        display: "inline-flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
@@ -34,7 +31,6 @@ export const IntegrationOptionItem = ({
         transition: "transform 0.2s ease, opacity 0.2s ease",
         opacity: 0.85,
       }}
-      // Standard hover effect for links
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = "translateY(-4px)";
         e.currentTarget.style.opacity = "1";
@@ -69,7 +65,13 @@ export const IntegrationOptionItem = ({
         <Text
           size="2"
           weight="medium"
-          style={{ color: darkMode ? "#d1d5db" : "#4b5563", textAlign: "center" }}
+          style={{ 
+            color: darkMode ? "#d1d5db" : "#4b5563", 
+            textAlign: "center",
+            fontFamily: "Libre Franklin",
+            fontWeight: 400,
+            letterSpacing: "0.09em"
+         }}
         >
           {integrationName}
         </Text>
@@ -78,9 +80,6 @@ export const IntegrationOptionItem = ({
   );
 };
 
-// ==========================================
-// 2. Integrations Carousel (Parent Component)
-// ==========================================
 
 interface IntegrationsCarouselProps {
   darkMode?: boolean;
@@ -88,7 +87,7 @@ interface IntegrationsCarouselProps {
   items: Omit<IntegrationOptionItemProps, "darkMode">[];
 }
 
-export const IntegrationsCarousel = ({
+const IntegrationsSection = ({
   darkMode = false,
   variant = "neumorphic",
   items,
@@ -96,12 +95,9 @@ export const IntegrationsCarousel = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  // Theme Colors
-  const pageBg = darkMode ? "#121212" : "#f9f9f9";
+  const pageBg = darkMode ? "#1b1c1d" : "#f9f9f9";
   const cardBg = darkMode ? "#1a1a1a" : "#ffffff";
   const iconColor = darkMode ? "#9ca3af" : "#6b7280";
-
-  // Shadows based on Variant
   const cardShadows = variant === "neumorphic"
     ? {
         boxShadow: darkMode
@@ -118,9 +114,7 @@ export const IntegrationsCarousel = ({
         borderRadius: "16px",
       };
 
-  // Smooth Auto-Slide Logic
   useEffect(() => {
-    // Only animate if there are more than 5 items AND the user isn't hovering
     if (items.length <= 5 || isHovered) return;
 
     const scrollContainer = scrollRef.current;
@@ -130,7 +124,6 @@ export const IntegrationsCarousel = ({
       if (scrollContainer) {
         scrollContainer.scrollLeft += 1;
         
-        // Reset to start if we reach the end
         if (
           scrollContainer.scrollLeft >=
           scrollContainer.scrollWidth - scrollContainer.clientWidth - 1
@@ -138,15 +131,14 @@ export const IntegrationsCarousel = ({
           scrollContainer.scrollLeft = 0;
         }
       }
-    }, 30); // Speed of the slide (lower is faster)
+    }, 30); 
 
     return () => clearInterval(scrollInterval);
   }, [items.length, isHovered]);
 
-  // Manual Override Controls
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      const scrollAmount = 200; // Distance to jump per click
+      const scrollAmount = 200; 
       scrollRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -163,28 +155,40 @@ export const IntegrationsCarousel = ({
       }}
     >
       <Container size="4">
-        <Box px={{ initial: "4", md: "8" }}> {/* Left & Right margin padding */}
+        <Box px={{ initial: "4", md: "8" }}> 
           
           <Card
             size="4"
             style={{
               backgroundColor: cardBg,
               ...cardShadows,
-              overflow: "hidden", // Keeps the sliding neat inside the card
+              overflow: "hidden", 
               position: "relative",
+              marginLeft: "33px",
+              marginRight: "33px",
+              paddingBottom: "23px"
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
             <Flex direction="column" align="center" gap="4">
               
-              <Heading size="6" style={{ color: darkMode ? "#fff" : "#111", marginBottom: "8px" }}>
-                Integrates Seamlessly
+              <Heading size="6" 
+              style={{ 
+                color: darkMode ? "#fff" : "#111", 
+                fontFamily: "Libre Baskerville",
+                fontSize: "23px",
+                letterSpacing: "0.06em",
+                marginTop: "23px",
+                marginBottom: "8px" }}>
+                Prospective API Integrations&nbsp;<i className="fa-solid fa-network-wired"></i>
               </Heading>
 
-              <Flex align="center" style={{ width: "100%", position: "relative" }}>
+              <Flex align="center" 
+              style={{ 
+                width: "100%", 
+                position: "relative" }}>
                 
-                {/* Left Manual Control */}
                 {items.length > 5 && (
                   <button
                     onClick={() => scroll("left")}
@@ -202,15 +206,14 @@ export const IntegrationsCarousel = ({
                   </button>
                 )}
 
-                {/* Scrollable Canvas */}
                 <Box
                   ref={scrollRef}
                   style={{
                     display: "flex",
                     overflowX: "auto",
-                    scrollBehavior: isHovered ? "smooth" : "auto", // Smooth for clicks, auto for JS interval
-                    scrollbarWidth: "none", // Firefox
-                    msOverflowStyle: "none", // IE
+                    scrollBehavior: isHovered ? "smooth" : "auto", 
+                    scrollbarWidth: "none", 
+                    msOverflowStyle: "none", 
                     flex: 1,
                     gap: "16px",
                     padding: "8px 0",
@@ -228,7 +231,6 @@ export const IntegrationsCarousel = ({
                   ))}
                 </Box>
 
-                {/* Right Manual Control */}
                 {items.length > 5 && (
                   <button
                     onClick={() => scroll("right")}
@@ -254,3 +256,5 @@ export const IntegrationsCarousel = ({
     </Section>
   );
 };
+
+export default IntegrationsSection;

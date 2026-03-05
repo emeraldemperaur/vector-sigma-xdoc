@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Section, Container } from "@radix-ui/themes";
+import { Box, Flex, Text, Section, Container, Heading } from "@radix-ui/themes";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
@@ -25,7 +25,8 @@ const CodeDemoSection = ({
 }: TwoColumnSectionProps) => {
 
   const pageBg = darkMode ? "#121212" : "#f3f4f6";
-  const defaultText = darkMode ? "#ffffff" : "#333333";
+  const defaultText = darkMode ? "#ffffff" : "#4b5563";
+  const defaultHeadingText = darkMode ? "#ffffff" : "#000000";
   
   const col2Bg = column2backgroundColorOverride || (darkMode ? "#1a1a1a" : "#f5f5f5");
   const col2Text = c2DisplayTextColorOverride || defaultText;
@@ -106,21 +107,47 @@ export const VΣRegistrationForm = () => {
       }}
     >
       <Container size="4">
-        {/* Responsive Flex: Column on mobile, Row on desktop */}
+         <Heading size="7" weight="bold" 
+              style={{
+                fontSize: '26px', 
+                letterSpacing: "0.06em",
+                fontFamily: 'Libre Baskerville', 
+                marginLeft: '13px',
+                marginBottom: '16px',
+                color: defaultHeadingText,
+                marginTop: '33px'}}>
+               Implementation&nbsp;<i className="fa-solid fa-code"></i>
+              </Heading>
+               <Text 
+                  as="p" 
+                  size="4" 
+                  mt="2" 
+                  style={{ 
+                    fontFamily: 'Libre Franklin',
+                    fontWeight: 400,
+                    color: defaultText,
+                    letterSpacing: "0.06em",
+                    marginBottom: "33px",
+                    marginLeft: "13px",
+                    marginRight: "13px"
+                 }}
+                >
+                  Form Fields, Input Validation and Submission callback functions can be defined and parametized 
+                  predicated on a JSON (JavaScript Object Notation) or native JavaScript&nbsp;
+                  <a className={darkMode ? "hyperlink-dark" : "hyperlink-light"} 
+                  href="#" target="_blank">xForm schema</a> and form object builder methods.
+                </Text>
         <Flex 
           direction={{ initial: "column", md: "row" }} 
           align="stretch" 
           gap="6"
         >
-          
-          {/* ========================================== */}
-          {/* COLUMN 1: Code View                        */}
-          {/* ========================================== */}
+            
           <Box
             className="demo-pane"
             style={{
               flex: 1,
-              backgroundColor: "#1e1e1e", // VS Code Dark background
+              backgroundColor: "#1e1e1e",
               padding: "24px",
               minHeight: "350px",
               ...paneShadow,
@@ -131,7 +158,7 @@ export const VΣRegistrationForm = () => {
               <Box style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#ffbd2e" }} />
               <Box style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#27c93f" }} />
             </Flex>
-
+            
             <SyntaxHighlighter 
               language="tsx" 
               style={vscDarkPlus}

@@ -8,6 +8,10 @@ interface FooterSectionProps {
   textColorOverride?: string;
 }
 
+const openPortfolio = () => {
+    window.open('https://www.mekaegwim.ca', '_blank')
+}
+
 const FooterSection = ({
   darkMode = false,
   variant = "neumorphic",
@@ -52,20 +56,48 @@ const FooterSection = ({
           mb="6"
         >
           <Box style={{ flex: 1, maxWidth: "300px" }}>
-            <Heading size="5" style={{ color: headingColor, letterSpacing: "1px" }} mb="3">
+            <Heading size="5" 
+            style={{ 
+                color: headingColor, 
+                letterSpacing: "0.06em",
+                fontFamily: "Libre Franklin",
+                fontWeight: 500,
+                }} mb="3">
               VΣ :: VectorSigma
             </Heading>
-            <Text size="2" style={{ lineHeight: "1.6" }}>
-              A highly flexible, type-safe, and extensible form builder for React. Level up your data pipelines, automation workflows and API integrations with convenience methods and robust validation.
+            <Text size="2" as="p"
+            style={{ 
+                lineHeight: "1.6",
+                fontFamily: "Libre Franklin",
+                textAlign: "justify",
+                marginTop: "13px",
+                marginBottom: "23px",
+                fontWeight: 300
+                }}>
+              Flexible, type-safe, and extensible form builder for React. Level up your data pipelines, automation workflows and API integrations with convenience methods and robust validation.
             </Text>
           </Box>
 
-          {/* Resources Column Only */}
-          <Flex direction="column" gap="2">
-            <Heading size="3" style={{ color: headingColor }} mb="1">Resources</Heading>
-            <Link href="#" color="gray" size="2">Documentation</Link>
-            <Link href="#" color="gray" size="2">API Reference</Link>
-            <Link href="#" color="gray" size="2">Examples</Link>
+          <Flex direction="column" gap="2" style={{fontFamily: "Libre Franklin"}}>
+            <Heading size="3" 
+            style={{ 
+                color: headingColor,
+                letterSpacing: "0.03em",
+                textTransform: "capitalize",
+                fontWeight: 600 
+                }} mb="1">Resources</Heading>
+            <Link style={{ cursor: "pointer", fontWeight: 500, color: txtColor }} 
+            target="_blank"
+            href="https://n8n.io/" color="gray" size="2">λ N8N Workflow Automation</Link>
+            <Link style={{ cursor: "pointer", fontWeight: 500, color: txtColor }} 
+            href="https://cloud.ibm.com/apidocs/watsonx-ai" 
+            target="_blank" color="gray" size="2">δ IBM Watsonx Orchestrate</Link>
+            <Link style={{ cursor: "pointer", fontWeight: 500, color: txtColor }} 
+            href="https://developer.adobe.com/firefly-services/docs/firefly-api/api/"
+            target="_blank" 
+            color="gray" size="2">Δ Adobe Firefly API</Link>
+            <Link style={{ cursor: "pointer", fontWeight: 500, color: txtColor }} 
+            href="https://lumalabs.ai/" target="_blank" color="gray" size="2">β Luma AI API</Link>
           </Flex>
           
         </Flex>
@@ -84,18 +116,26 @@ const FooterSection = ({
           align="center"
           gap="4"
         >
-          <Text size="2">
+          <Text onClick={() => openPortfolio()} style={{
+            fontFamily: "Libre Franklin",
+            fontWeight: 500,
+            letterSpacing: "0.06em",
+            cursor: "pointer",
+            }} size="2">
             &copy; {currentYear} VectorSigma | BUILD by ME
           </Text>
 
           <Flex gap="4">
-            <Link href="#" color="gray" style={{ display: "flex", alignItems: "center" }}>
+            <Link href="https://www.github.com/emeraldemperaur" color="gray" target="_blank"
+            style={{ display: "flex", alignItems: "center", cursor: "pointer", color: txtColor }}>
               <GitHubLogoIcon width="20" height="20" />
             </Link>
-            <Link href="#" color="gray" style={{ display: "flex", alignItems: "center" }}>
+            <Link href="https://www.instagram.com/chromito.me" color="gray" target="_blank"
+            style={{ display: "flex", alignItems: "center", cursor: "pointer", color: txtColor }}>
               <InstagramLogoIcon width="20" height="20" />
             </Link>
-            <Link href="#" color="gray" style={{ display: "flex", alignItems: "center" }}>
+            <Link href="https://ca.linkedin.com/in/emekaegwimdeveloper" color="gray" target="_blank"
+            style={{ display: "flex", alignItems: "center", cursor: "pointer", color: txtColor }}>
               <LinkedInLogoIcon width="20" height="20" />
             </Link>
           </Flex>

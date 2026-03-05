@@ -1,17 +1,17 @@
 #  💠 Vector Sigma 
 ## Dynamic Form Orchestrator Documentation 📦
-[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR_API_ID/deploy-status)](https://app.netlify.com/sites/YOUR_SITE_NAME/deploys)
-![Lerna](https://img.shields.io/github/lerna-json/v/user/repo?style=flat-square&logo=lerna)
 [![NPM Version](https://img.shields.io/npm/v/@emeraldemperaur/vector-sigma.svg)](https://www.npmjs.com/package/@emeraldemperaur/vector-sigma)
 ![Changesets](https://img.shields.io/badge/maintained%20with-changesets-176de3?style=flat-square&logo=changesets&logoColor=white) 
 [![Release Status](https://github.com/emeraldemperaur/vector-sigma/actions/workflows/release.yml/badge.svg)](https://github.com/emeraldemperaur/vector-sigma/actions)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR_API_ID/deploy-status)](https://app.netlify.com/sites/YOUR_SITE_NAME/deploys)
+![Lerna](https://img.shields.io/github/lerna-json/v/user/repo?style=flat-square&logo=lerna)
 
 
 ### Overview
 <p align="justify">
 Vector Sigma (VΣ) is a dynamic form orchestrator package for rapidly creating and managing the complex lifecycle of interactive extensible input forms that can be easily embedded into a React front-end client interface for use in data capturing & onboarding applications or systems. 
 
-Fields, Input Validation and Submission can be defined and parametized in real-time predicated on a JSON (JavaScript Object Notation) xForm definition or builder object pattern.
+Fields, Input Validation and Submission callback() can be defined and parametized in real-time predicated on a native JavaScript object/JSON (JavaScript Object Notation) xForm definition or by builder methods object pattern.
 </p>
  
 #### Key Features

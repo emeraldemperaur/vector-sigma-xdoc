@@ -4,6 +4,7 @@ import { Box } from "@radix-ui/themes";
 import { Route, Routes } from "react-router-dom";
 import NavigationMenu from "./components/NavigationMenu";
 import Maison from "./pages/Maison";
+import FooterSection from "./components/FooterSection";
 
 function App() {
 
@@ -17,12 +18,13 @@ function App() {
     >
      <NavigationMenu/>
      <Routes>
-        <Route path='/' element={<Maison/>}/>
+        <Route path='/' element={<Maison darkMode={false}/>}/>
         <Route path='documentation' element={<>VΣ Documentation</>}/>
         <Route path='components' element={<>χForm Components</>}/>
         <Route path='showcase' element={<>&Omega; Showcase</>}/>
         <Route path='integrations' element={<>&alpha; Integrations</>}/>
       </Routes>
+      <FooterSection darkMode/>
     </Box> 
     </>
   )
