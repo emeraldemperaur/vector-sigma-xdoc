@@ -2,19 +2,18 @@ import { NavLink, useNavigate  } from 'react-router-dom';
 import '../styles/main.scss';
 import { useState } from 'react';
 
-const NavigationMenu = () => {
+const NavigationMenu = ({darkModeToggle, darkMode} : {darkModeToggle: () => void, darkMode: boolean}) => {
     const navigator = useNavigate();
     const homeNavigator = () => { navigator('/') };
-    const [darkMode, setDarkMode] = useState(false);
     const [logotext, setLogoText] = useState(<>V&Sigma;CTOR &sigma;</>);
 
     const logo = document.getElementById('vectorsigma-logo');
 
     if (logo) {
-        logo.addEventListener('mouseover', function() {
+        logo.addEventListener('mouseover', () => {
             setLogoText(<>V&Sigma;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</>)
         });
-        logo.addEventListener('mouseout', function() {
+        logo.addEventListener('mouseout', () => {
             setLogoText(<>V&Sigma;CTOR &sigma;</>)
         });
     }
@@ -44,8 +43,8 @@ const NavigationMenu = () => {
             <a href='https://github.com/emeraldemperaur/vector-sigma' target='_blank'  className="desktop-item"><i className="header-menu-icon fa-brands fa-github"></i></a>
             </li>
             <li>
-            <a onClick={() => setDarkMode(!darkMode)} className="desktop-item">
-                <i onClick={() => setDarkMode(!darkMode)} className={`header-menu-icon ${darkMode ? 'fa-regular fa-lightbulb' : 'fa-regular fa-moon'}`}></i>
+            <a onClick={() => darkModeToggle()} className="desktop-item">
+                <i onClick={() => darkModeToggle()} className={`header-menu-icon ${darkMode ? 'fa-regular fa-lightbulb' : 'fa-regular fa-moon'}`}></i>
             </a>
             </li>
             </ul>

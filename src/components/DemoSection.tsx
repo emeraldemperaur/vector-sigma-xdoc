@@ -1,8 +1,9 @@
 import { Box, Flex, Text, Section, Container, Heading } from "@radix-ui/themes";
+import { NavLink } from "react-router-dom";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-interface TwoColumnSectionProps {
+interface DemoSectionProps {
   darkMode?: boolean;
   variant?: "neumorphic" | "material";
   column1DisplayText?: string;
@@ -22,7 +23,7 @@ const CodeDemoSection = ({
   column2DisplayText,
   column2backgroundColorOverride,
   c2DisplayTextColorOverride,
-}: TwoColumnSectionProps) => {
+}: DemoSectionProps) => {
 
   const pageBg = darkMode ? "#121212" : "#f3f4f6";
   const defaultText = darkMode ? "#ffffff" : "#4b5563";
@@ -132,10 +133,10 @@ export const VΣRegistrationForm = () => {
                     marginRight: "13px"
                  }}
                 >
-                  Form Fields, Input Validation and Submission callback functions can be defined and parametized 
+                  Form Fields, Input Validation and Submission callback function can be defined and parametized 
                   predicated on a JSON (JavaScript Object Notation) or native JavaScript&nbsp;
-                  <a className={darkMode ? "hyperlink-dark" : "hyperlink-light"} 
-                  href="#" target="_blank">xForm schema</a> and form object builder methods.
+                  <NavLink className={darkMode ? "hyperlink-dark" : "hyperlink-light"} 
+                  to="/documentation#xform-schema">xForm schema</NavLink> and form object builder methods.
                 </Text>
         <Flex 
           direction={{ initial: "column", md: "row" }} 

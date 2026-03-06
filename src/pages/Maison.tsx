@@ -25,15 +25,15 @@ const Maison = ( {darkMode}: {darkMode: boolean}) => {
     return(
         <>
         <br/>
-        <ProductRibbon darkMode={true} title="V&Sigma;CTOR &Sigma;" subtitle="Dynamic Form Orchestrator"
+        <ProductRibbon darkMode={darkMode} title="V&Sigma;CTOR &Sigma;" subtitle="Dynamic Form Orchestrator"
         description="Vector Sigma is a dynamic form orchestrator package for rapidly creating and managing the complex lifecycle of interactive extensible input forms 
         that can be easily embedded into a React front-end client interface for use in data pipelines, onboarding applications or automation workflows. 
         Customizable to fit seamlessly into an existing design system and enable agile developer control of the visual layer and theming." 
         icon={<i className="fa-brands fa-npm"></i>} />
-        <InstallSection darkMode={true} subtitle="ΣχTANT VERSION v1.5.0" variant="material"/>
-        <AdRibbon darkMode={true}/>
-        <FeaturesRibbon darkMode={true}/>
-        <CodeDemoSection darkMode={false}/>
+        <InstallSection darkMode={darkMode} subtitle="ΣχTANT VERSION v1.5.0" variant="material"/>
+        <AdRibbon darkMode={darkMode}/>
+        <FeaturesRibbon darkMode={darkMode}/>
+        <CodeDemoSection darkMode={darkMode}/>
         <IntegrationsSection darkMode={darkMode}
         items={[
             {

@@ -92,6 +92,7 @@ const ProductRibbon = ({
                 maxWidth: "100%",
                 marginLeft: "111px",
                 marginRight: "111px",
+                marginBottom: "33px",
                 fontWeight: 300 
               }}
             >

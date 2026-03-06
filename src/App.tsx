@@ -5,8 +5,18 @@ import { Route, Routes } from "react-router-dom";
 import NavigationMenu from "./components/NavigationMenu";
 import Maison from "./pages/Maison";
 import FooterSection from "./components/FooterSection";
+import { useEffect, useState } from "react";
+import { DocumentationViewer } from "./components/DocumentationViewer";
 
 function App() {
+
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  useEffect(() => {
+
+  }, [isDarkMode]);
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  }
 
   return (
     <>
@@ -16,15 +26,15 @@ function App() {
     py={{ initial: "4", md: "6" }}
     style={{ boxSizing: "border-box" }}
     >
-     <NavigationMenu/>
+     <NavigationMenu darkModeToggle={toggleDarkMode} darkMode={isDarkMode}/>
      <Routes>
-        <Route path='/' element={<Maison darkMode={false}/>}/>
-        <Route path='documentation' element={<>VΣ Documentation</>}/>
+        <Route path='/' element={<Maison darkMode={isDarkMode}/>}/>
+        <Route path='documentation' element={<DocumentationViewer darkMode={isDarkMode}/>}/>
         <Route path='components' element={<>χForm Components</>}/>
         <Route path='showcase' element={<>&Omega; Showcase</>}/>
         <Route path='integrations' element={<>&alpha; Integrations</>}/>
       </Routes>
-      <FooterSection darkMode/>
+      <FooterSection darkMode={isDarkMode}/>
     </Box> 
     </>
   )
