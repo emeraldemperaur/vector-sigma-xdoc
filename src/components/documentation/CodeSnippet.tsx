@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Box, Flex, Text, IconButton } from '@radix-ui/themes';
 
-// Leveraging your existing react-icons library for language/UI icons
 import { SiJavascript } from '@react-icons/all-files/si/SiJavascript';
 import { SiTypescript } from '@react-icons/all-files/si/SiTypescript';
 import { SiReact } from '@react-icons/all-files/si/SiReact';
