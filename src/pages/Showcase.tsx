@@ -3,7 +3,6 @@ import { PageTitle } from "../components/PageTitle";
 import AdRibbon from "../components/AdRibbon";
 import { UseCaseCard } from "../components/UseCaseCard";
 import { xFormCodeUsageSnippet } from "../utils/xFormCodeSnippetString";
-import { GoogleAd } from "../components/GoogleAd";
 
 const Showcase = ({darkMode}: {darkMode: boolean}) => {
     useEffect(()=>{
@@ -25,12 +24,17 @@ const Showcase = ({darkMode}: {darkMode: boolean}) => {
         marginTop={"69px"}
         marginBottom={"69px"}/>
         <AdRibbon darkMode={darkMode}>
-                <GoogleAd 
-                    client="ca-pub-3704334287285175" 
-                    slot="8343960922" 
-                    format="auto" 
-                    responsive={true} 
-                  />
+                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3704334287285175"
+                        crossOrigin="anonymous"></script>
+                <ins className="adsbygoogle"
+                    style={{display:"block"}}
+                    data-ad-client="ca-pub-3704334287285175"
+                    data-ad-slot="8343960922"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
               </AdRibbon>
         <UseCaseCard design="neumorphic" darkMode={darkMode} useCaseLabel="USECASE #002"
         useCaseDescription="Client Onboarding Data Pipeline"

@@ -3,7 +3,6 @@ import { PageTitle } from "../components/PageTitle";
 import { Card } from "../components/Card";
 import IntegrationsSection from "../components/IntegrationsSection";
 import AdRibbon from "../components/AdRibbon";
-import { GoogleAd } from "../components/GoogleAd";
 
 const Integrations = ({darkMode}: {darkMode: boolean}) => {
     let n8nLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/N8n-logo-new.svg/1280px-N8n-logo-new.svg.png";
@@ -40,12 +39,17 @@ const Integrations = ({darkMode}: {darkMode: boolean}) => {
             </Card>
         </div>
         <AdRibbon darkMode={darkMode}>
-                <GoogleAd 
-                    client="ca-pub-3704334287285175" 
-                    slot="8343960922" 
-                    format="auto" 
-                    responsive={true} 
-                  />
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3704334287285175"
+                        crossOrigin="anonymous"></script>
+                <ins className="adsbygoogle"
+                    style={{display:"block"}}
+                    data-ad-client="ca-pub-3704334287285175"
+                    data-ad-slot="8343960922"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
               </AdRibbon>
         <IntegrationsSection darkMode={darkMode}
         items={[

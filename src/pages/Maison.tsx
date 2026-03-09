@@ -5,7 +5,6 @@ import FeaturesRibbon from "../components/FeaturesRibbon";
 import InstallSection from "../components/InstallationSection";
 import IntegrationsSection from "../components/IntegrationsSection";
 import ProductRibbon from "../components/ProductRibbon";
-import { GoogleAd } from "../components/GoogleAd";
 
 const Maison = ( {darkMode}: {darkMode: boolean}) => {
     let n8nLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/N8n-logo-new.svg/1280px-N8n-logo-new.svg.png";
@@ -35,12 +34,17 @@ const Maison = ( {darkMode}: {darkMode: boolean}) => {
         icon={<i className="fa-brands fa-npm"></i>} />
         <InstallSection darkMode={darkMode} subtitle="ΣχTANT VERSION v1.5.0" variant="material"/>
         <AdRibbon darkMode={darkMode}>
-                <GoogleAd 
-                    client="ca-pub-3704334287285175" 
-                    slot="8343960922" 
-                    format="auto" 
-                    responsive={true} 
-                  />
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3704334287285175"
+                        crossOrigin="anonymous"></script>
+                <ins className="adsbygoogle"
+                    style={{display:"block"}}
+                    data-ad-client="ca-pub-3704334287285175"
+                    data-ad-slot="8343960922"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
               </AdRibbon>
         <FeaturesRibbon darkMode={darkMode}/>
         <CodeDemoSection darkMode={darkMode}/>
