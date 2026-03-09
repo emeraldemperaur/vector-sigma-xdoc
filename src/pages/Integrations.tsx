@@ -1,12 +1,10 @@
 import { useEffect } from "react";
-import AdRibbon from "../components/AdRibbon";
-import CodeDemoSection  from "../components/DemoSection";
-import FeaturesRibbon from "../components/FeaturesRibbon";
-import InstallSection from "../components/InstallationSection";
+import { PageTitle } from "../components/PageTitle";
+import { Card } from "../components/Card";
 import IntegrationsSection from "../components/IntegrationsSection";
-import ProductRibbon from "../components/ProductRibbon";
+import AdRibbon from "../components/AdRibbon";
 
-const Maison = ( {darkMode}: {darkMode: boolean}) => {
+const Integrations = ({darkMode}: {darkMode: boolean}) => {
     let n8nLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/N8n-logo-new.svg/1280px-N8n-logo-new.svg.png";
     let watsonxLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/IBM_watsonx_logo.svg/1280px-IBM_watsonx_logo.svg.png";
     let lumaAILogoUrl = "https://logos-world.net/wp-content/uploads/2024/11/Luma-Labs-Logo.png";
@@ -19,23 +17,28 @@ const Maison = ( {darkMode}: {darkMode: boolean}) => {
     : "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/XAI_Logo.svg/1280px-XAI_Logo.svg.png";
     darkMode ? notionLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png" 
     : notionLogoUrl = notionLogoUrl;
-
     useEffect(()=>{
         document.body.style.backgroundColor = darkMode ? "#1b1c1d" : "#ffffff";
     }, [darkMode]);
-
     return(
         <>
-        <br/>
-        <ProductRibbon darkMode={darkMode} title="V&Sigma;CTOR &Sigma;" subtitle="Dynamic Form Orchestrator"
-        description="Vector Sigma is a dynamic form orchestrator package for rapidly creating and managing the complex lifecycle of interactive extensible input forms 
-        that can be easily embedded into a React front-end client interface for use in data pipelines, onboarding applications or automation workflows. 
-        Customizable to fit seamlessly into an existing design system and enable agile developer control of the visual layer and theming." 
-        icon={<i className="fa-brands fa-npm"></i>} />
-        <InstallSection darkMode={darkMode} subtitle="ΣχTANT VERSION v1.5.0" variant="material"/>
+        
+        <PageTitle variant="material" title="Prospective Integrations" darkMode={darkMode} icon={<>&alpha;</>}/>
+        <div 
+        style={{
+            backgroundColor: darkMode ? "#1b1c1d" : "#ffffff", 
+            textAlign: "justify", 
+            fontSize:"18px", 
+            fontFamily: "Libre Franklin",
+            letterSpacing: "0.09em"
+            }}>
+            <Card darkMode={darkMode} marginLeft={"33px"} marginRight={"33px"} marginTop={"96px"} marginBottom={"96px"}>
+            <p>Future <code>VectorSigma</code> package version releases to include convenience methods for efortless integration with popular AI, Data Engineering 
+            and Productivity APIs like N8N, Apache Airflow, IBM Watsonx, Adobe Firefly, LumaAI, xAI, Speechify SIMBA, OpenTable, 
+            Notion, Salesforce and more</p>
+            </Card>
+        </div>
         <AdRibbon darkMode={darkMode}/>
-        <FeaturesRibbon darkMode={darkMode}/>
-        <CodeDemoSection darkMode={darkMode}/>
         <IntegrationsSection darkMode={darkMode}
         items={[
             {
@@ -107,7 +110,8 @@ const Maison = ( {darkMode}: {darkMode: boolean}) => {
             ]}/>
         </>
     )
+    
 
 }
 
-export default Maison;
+export default Integrations;

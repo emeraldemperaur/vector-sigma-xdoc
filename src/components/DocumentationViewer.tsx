@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid, Heading, Text, Section, Container, Card } from "@radix-ui/themes";
+import { NavLink as NavigationLink } from 'react-router-dom';
+import { CodeSnippet } from "./documentation/CodeSnippet";
+import { statefulUsageSnippet, xForm97, xFormCodeSnippet, xFormCodeUsageSnippet, xFormFileDataCodeString, xFormRegistrationCodeString, xFormRenderOption } from "../utils/xFormCodeSnippetString";
+import { TabItem, TabSwitcher } from "./documentation/TabSwitcher";
+import AdRibbon from "./AdRibbon";
+
 
 
 
@@ -14,7 +20,7 @@ const DocSection = ({ id, title, children }: { id: string; title: string | React
         }}>
       {title}
     </Heading>
-    <Text as="p" size="3" style={{ opacity: 0.8, lineHeight: "1.6" }}>
+    <Text as="div" size="3" style={{ opacity: 0.8, lineHeight: "1.6" }}>
       {children || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."}
     </Text>
   </section>
@@ -177,6 +183,7 @@ export const DocumentationViewer = ({
 
                   <NavLink id="usevectorsigma-hook" label="useVectorSigma() Hook" activeId={activeId} onClick={handleScroll} activeColor={activeColor} textSecondary={textSecondary} />
                   <NavLink id="xform-state-observers" label="χForm State Observers" activeId={activeId} onClick={handleScroll} activeColor={activeColor} textSecondary={textSecondary} />
+                  <NavLink id="xform-onsubmit-formdata" label="onSubmit::FormData" activeId={activeId} onClick={handleScroll} activeColor={activeColor} textSecondary={textSecondary} />
                   <NavLink id="about-me" label="About Developer" activeId={activeId} onClick={handleScroll} activeColor={activeColor} textSecondary={textSecondary} />
                 </ul>
               </Box>
@@ -187,7 +194,7 @@ export const DocumentationViewer = ({
             <main>
               <DocSection id="introduction" title="Introduction">
                 <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}>
-                    VectorSigma is a dual mode package bundled with both CommonJS (CJS) & ES Modules (ESM) builds to 
+                    VectorSigma is a dual mode package bundled with both CommonJS (CJS), ES Modules (ESM) & Universal Module Definition (UMD) builds to 
                     facilitate universal module compatibility and enable effortless integration across legacy and modern JavaScript ecosystems.
                     
                 </p>
@@ -198,7 +205,7 @@ export const DocumentationViewer = ({
                     CRM systems, or databases immediately upon submission.
                 </p>
                 <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}>
-                    Reusable χForm UI components with material, outline and neumorphic design variants are explicitly exported 
+                    Reusable <NavigationLink style={{color: textPrimary, textDecoration: 'none'}} to='/components'><em>χForm UI components</em></NavigationLink> with material, outline and neumorphic design variants are explicitly exported 
                     from package entry point to enable developer-friendly use as a lightweight ARIA compliant component library.
                 </p>
               </DocSection>
@@ -207,21 +214,61 @@ export const DocumentationViewer = ({
                 <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}} 
                 className="doc-text">Before starting a project make sure to install the peer dependencies: &nbsp;<code>react</code>, &nbsp;<code>react-dom</code>&nbsp; & <code>&nbsp;sass-embedded</code></p>
                 <h3 className="doc-text">To install VectorSigma in your project, enter the following command in terminal:</h3>
+                <CodeSnippet darkMode={darkMode} language="terminal" code={`npm install vector-sigma`}/>
                 <h3 className="doc-text">Importing ES (ECMAScript) Module</h3>
+                <CodeSnippet darkMode={darkMode} language="typescript" 
+                code={`import { VectorSigma, Teletraan1 } from '@emeraldemperaur/vector-sigma';`} 
+                />
                 <h3 className="doc-text">Importing CommonJS (CJS)</h3>
+                <CodeSnippet darkMode={darkMode} language="javascript" 
+                code={`const { VectorSigma, Teletraan1 } = require('@emeraldemperaur/vector-sigma');`} 
+                />
                 <h3 className="doc-text">Importing UMD (Universal Module Definition) via unpkg CDN</h3>
+                 <CodeSnippet darkMode={darkMode} language="html" 
+                code={`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@emeraldemperaur/vector-sigma/lib/index.umd.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        // Access the package directly from the global window object
+        const { VectorSigma } = window.VectorSigma; 
+        const formInstance = new VectorSigma(apiJSONSchema);
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(formInstance.render());
+    </script>
+</body>
+</html>`} 
+                />
               </DocSection>
+              <AdRibbon darkMode={darkMode}/>
               <DocSection id="xform-schema" title="χForm Schema">
                 <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}>
                     Declarative JSON or JavaScript object schema attributes <code>isRequired</code> and <code>errorText</code> facilitate a validation engine that is comprehensive, accessible and easy to maintain. 
                     <code> onChange()</code>, <code> onBlur()</code> input event control state updates, errors and values are handled automatically. 
                     <code> onSubmit()</code> handler is automatically blocked if the input vs. validation schema is invalid.
                 </p>
+                <CodeSnippet darkMode={darkMode} language="typescript" 
+                code={xFormCodeSnippet} maxHeight={"400px"}
+                />
               </DocSection>
               <DocSection id="usage" title="Usage">
                 <h3 className="doc-text">Code Implementation</h3>
-
-                <h3 className="doc-text">Display Variants</h3>
+                <CodeSnippet darkMode={darkMode} language="typescript" maxHeight={"400px"} 
+                code={xFormCodeUsageSnippet} 
+                />
+                <h3 className="doc-text">Display Mode Variants</h3>
+                <TabSwitcher design="outline" darkMode={darkMode} neonColor={activeColor} contentHeight={"696px"}>
+                  <TabItem value="codex" label="Codex" imageSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"></TabItem>
+                  <TabItem value="codice" label="Codice" imageSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"></TabItem>
+                  <TabItem value="accordion" label="Accordion" imageSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"></TabItem>
+                  <TabItem value="dual" label="Dual" imageSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"></TabItem>
+                </TabSwitcher>
               </DocSection>
               
               <section id="theming" style={{ paddingTop: "24px", paddingBottom: "24px" }}>
@@ -247,12 +294,18 @@ export const DocumentationViewer = ({
                       a range of <code> theme </code> properties such as <code> accentColor</code>, <code> grayColor</code>, <code> panelBackground</code>, <code> radius</code>, <code> scaling </code> 
                       and <code>appearance</code>.
                     </p>
+                    <CodeSnippet darkMode={darkMode} language="typescript" 
+                    code={xFormRenderOption} 
+                    />
                   </DocSection>
                   <DocSection id="xform-97-reference" title="xForm '97 Reference">
                     <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}>
                       <code>theme</code> object for reference with the aesthetic of X-Men '97 with the classic 90's Jim Lee era 
                       - deep blue & high-contrast yellow design theme. 
                     </p>
+                    <CodeSnippet darkMode={darkMode} language="typescript" 
+                    code={xForm97} 
+                    />
                   </DocSection>
                 </Box>
               </section>
@@ -261,13 +314,27 @@ export const DocumentationViewer = ({
                  <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}><code>useVectorSigma()</code> hook method utilizes <code>React</code> lazy initialization in tandem with <code>useRef</code> to guarantee 
                   VectorSigma class object instance is created in a singleton-ish fashion when the VΣ component mounts, 
                   and safely persists across DOM re-renders.</p>
+                  <CodeSnippet darkMode={darkMode} language="typescript" maxHeight={"400px"}
+                  code={statefulUsageSnippet} 
+                  />
               </DocSection>
               <DocSection id="xform-state-observers" title="χForm State Observers">
-                <p>
+                <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}>
                   Access to <strong>VectorSigma</strong> <code>class instance</code> properties as well as 
                   <a style={{color: textPrimary, fontWeight: "bold", textDecoration: 'none'}} href="https://formik.org/docs/api/formik" target="_blank"> Formik </a> <code>values</code> and <code>action</code> methods allow developers to 
                   trigger form submissions, resets, or validation checks predicated on their application integration or logic.
                 </p>
+                <CodeSnippet darkMode={darkMode} language="typescript" maxHeight={"600px"}
+                code={xFormRegistrationCodeString} 
+                />
+              </DocSection>
+              <DocSection id="xform-onsubmit-formdata" title="onSubmit::FormData">
+                <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}>
+                  Send raw <code>File</code> objects (e.g. Images, Documents, PDFs) to an API integration as <code>multipart/form-data</code>
+                </p>
+                <CodeSnippet darkMode={darkMode} language="typescript" maxHeight={"600px"}
+                code={xFormFileDataCodeString} 
+                />
               </DocSection>
               <DocSection id="about-me" title="About Developer">
                 <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}>GitHub | <a style={{color: textPrimary, fontWeight: "bold", textDecoration: 'none'}}

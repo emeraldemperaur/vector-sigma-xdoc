@@ -7,6 +7,9 @@ import Maison from "./pages/Maison";
 import FooterSection from "./components/FooterSection";
 import { useEffect, useState } from "react";
 import { DocumentationViewer } from "./components/DocumentationViewer";
+import Showcase from "./pages/Showcase";
+import Integrations from "./pages/Integrations";
+import XFormComponent from "./pages/XFormComponent";
 
 function App() {
 
@@ -30,9 +33,9 @@ function App() {
      <Routes>
         <Route path='/' element={<Maison darkMode={isDarkMode}/>}/>
         <Route path='documentation' element={<DocumentationViewer darkMode={isDarkMode}/>}/>
-        <Route path='components' element={<>χForm Components</>}/>
-        <Route path='showcase' element={<>&Omega; Showcase</>}/>
-        <Route path='integrations' element={<>&alpha; Integrations</>}/>
+        <Route path='components' element={<XFormComponent darkMode={isDarkMode}/>}/>
+        <Route path='showcase' element={<Showcase darkMode={isDarkMode}/>}/>
+        <Route path='integrations' element={<Integrations darkMode={isDarkMode}/>}/>
       </Routes>
       <FooterSection darkMode={isDarkMode}/>
     </Box> 

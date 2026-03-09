@@ -173,7 +173,6 @@ export const VΣRegistrationForm = () => {
               {vectorSigmaCode}
             </SyntaxHighlighter>
 
-            {/* Hover Overlay */}
             {column1DisplayText && (
               <Box className="demo-overlay">
                 <Text size="6" weight="bold" style={{ color: c1DisplayTextColorOverride || "#ffffff", letterSpacing: "1px" }}>
@@ -183,16 +182,9 @@ export const VΣRegistrationForm = () => {
             )}
           </Box>
 
-          {/* ========================================== */}
-          {/* SEPARATOR: Responsive Gradient Line          */}
-          {/* ========================================== */}
           <Flex align="center" justify="center">
             <Box className="demo-separator" />
           </Flex>
-
-          {/* ========================================== */}
-          {/* COLUMN 2: Visual Canvas                      */}
-          {/* ========================================== */}
           <Box
             className="demo-pane"
             style={{
@@ -206,7 +198,6 @@ export const VΣRegistrationForm = () => {
               ...paneShadow,
             }}
           >
-            {/* Visual Canvas Content (Placeholder) */}
             <Box 
               style={{ 
                 width: "100%", 
@@ -224,7 +215,6 @@ export const VΣRegistrationForm = () => {
               </Text>
             </Box>
 
-            {/* Hover Overlay */}
             {column2DisplayText && (
               <Box className="demo-overlay">
                 <Text size="6" weight="bold" style={{ color: col2Text, letterSpacing: "1px" }}>
