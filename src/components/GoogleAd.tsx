@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface GoogleAdProps {
   client: string;
@@ -16,26 +16,30 @@ declare global {
 export const GoogleAd = ({ 
   client, 
   slot, 
-  format = "auto", 
-  responsive = true 
 }: GoogleAdProps) => {
+  const adRequested = useRef(false);
 
   useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${client}`;
+    script.async = true;
+    script.crossOrigin = "anonymous";
+    document.head.appendChild(script);
+    if (adRequested.current) return;
+    adRequested.current = true;
     try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (err) {
-      console.error("AdSense script failed to load:", err);
+      ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+    } catch (error) {
+      console.error("VectorSigma AdSense Error:", (error as Error).message);
     }
   }, []);
 
   return (
     <ins
       className="adsbygoogle"
-      style={{ display: "block", width: "100%", height: "100%" }}
+      style={{ display: "block", width: "100%", height: "69px !important" }}
       data-ad-client={client}
       data-ad-slot={slot}
-      data-ad-format={format}
-      data-full-width-responsive={responsive ? "true" : "false"}
     />
   );
 };

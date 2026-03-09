@@ -3,6 +3,7 @@ import { PageTitle } from "../components/PageTitle";
 import { Card } from "../components/Card";
 import IntegrationsSection from "../components/IntegrationsSection";
 import AdRibbon from "../components/AdRibbon";
+import { GoogleAd } from "../components/GoogleAd";
 
 const Integrations = ({darkMode}: {darkMode: boolean}) => {
     let n8nLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/N8n-logo-new.svg/1280px-N8n-logo-new.svg.png";
@@ -38,7 +39,14 @@ const Integrations = ({darkMode}: {darkMode: boolean}) => {
             Notion, Salesforce and more</p>
             </Card>
         </div>
-        <AdRibbon darkMode={darkMode}/>
+        <AdRibbon darkMode={darkMode}>
+                <GoogleAd 
+                    client="ca-pub-3704334287285175" 
+                    slot="8343960922" 
+                    format="auto" 
+                    responsive={true} 
+                  />
+              </AdRibbon>
         <IntegrationsSection darkMode={darkMode}
         items={[
             {

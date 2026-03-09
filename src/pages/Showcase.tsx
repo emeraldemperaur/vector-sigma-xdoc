@@ -3,6 +3,7 @@ import { PageTitle } from "../components/PageTitle";
 import AdRibbon from "../components/AdRibbon";
 import { UseCaseCard } from "../components/UseCaseCard";
 import { xFormCodeUsageSnippet } from "../utils/xFormCodeSnippetString";
+import { GoogleAd } from "../components/GoogleAd";
 
 const Showcase = ({darkMode}: {darkMode: boolean}) => {
     useEffect(()=>{
@@ -23,7 +24,14 @@ const Showcase = ({darkMode}: {darkMode: boolean}) => {
         marginRight={"33px"}
         marginTop={"69px"}
         marginBottom={"69px"}/>
-        <AdRibbon darkMode={darkMode}/>
+        <AdRibbon darkMode={darkMode}>
+                <GoogleAd 
+                    client="ca-pub-3704334287285175" 
+                    slot="8343960922" 
+                    format="auto" 
+                    responsive={true} 
+                  />
+              </AdRibbon>
         <UseCaseCard design="neumorphic" darkMode={darkMode} useCaseLabel="USECASE #002"
         useCaseDescription="Client Onboarding Data Pipeline"
         useCaseSynopsis="Client profile information data capture node for onboarding normalized or sanitized new user account details into a SaaS application, database or data warehouse."

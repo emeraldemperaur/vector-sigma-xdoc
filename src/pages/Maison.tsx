@@ -5,6 +5,7 @@ import FeaturesRibbon from "../components/FeaturesRibbon";
 import InstallSection from "../components/InstallationSection";
 import IntegrationsSection from "../components/IntegrationsSection";
 import ProductRibbon from "../components/ProductRibbon";
+import { GoogleAd } from "../components/GoogleAd";
 
 const Maison = ( {darkMode}: {darkMode: boolean}) => {
     let n8nLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/N8n-logo-new.svg/1280px-N8n-logo-new.svg.png";
@@ -33,7 +34,14 @@ const Maison = ( {darkMode}: {darkMode: boolean}) => {
         Customizable to fit seamlessly into an existing design system and enable agile developer control of the visual layer and theming." 
         icon={<i className="fa-brands fa-npm"></i>} />
         <InstallSection darkMode={darkMode} subtitle="ΣχTANT VERSION v1.5.0" variant="material"/>
-        <AdRibbon darkMode={darkMode}/>
+        <AdRibbon darkMode={darkMode}>
+                <GoogleAd 
+                    client="ca-pub-3704334287285175" 
+                    slot="8343960922" 
+                    format="auto" 
+                    responsive={true} 
+                  />
+              </AdRibbon>
         <FeaturesRibbon darkMode={darkMode}/>
         <CodeDemoSection darkMode={darkMode}/>
         <IntegrationsSection darkMode={darkMode}

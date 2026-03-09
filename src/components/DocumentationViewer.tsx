@@ -5,6 +5,7 @@ import { CodeSnippet } from "./documentation/CodeSnippet";
 import { statefulUsageSnippet, xForm97, xFormCodeSnippet, xFormCodeUsageSnippet, xFormFileDataCodeString, xFormRegistrationCodeString, xFormRenderOption } from "../utils/xFormCodeSnippetString";
 import { TabItem, TabSwitcher } from "./documentation/TabSwitcher";
 import AdRibbon from "./AdRibbon";
+import { GoogleAd } from "./GoogleAd";
 
 
 
@@ -196,7 +197,6 @@ export const DocumentationViewer = ({
                 <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}>
                     VectorSigma is a dual mode package bundled with both CommonJS (CJS), ES Modules (ESM) & Universal Module Definition (UMD) builds to 
                     facilitate universal module compatibility and enable effortless integration across legacy and modern JavaScript ecosystems.
-                    
                 </p>
                 <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}>
                     VΣ leverages Formik for robust React state management and Yup for declarative schema validation to adhere strictly to the standard React form lifecycle, 
@@ -246,7 +246,14 @@ export const DocumentationViewer = ({
 </html>`} 
                 />
               </DocSection>
-              <AdRibbon darkMode={darkMode}/>
+              <AdRibbon darkMode={darkMode}>
+                <GoogleAd 
+                    client="ca-pub-3704334287285175" 
+                    slot="8343960922" 
+                    format="auto" 
+                    responsive={true} 
+                  />
+              </AdRibbon>
               <DocSection id="xform-schema" title="χForm Schema">
                 <p style={{textAlign: "justify", fontSize:"16px", fontFamily: "Libre Franklin"}}>
                     Declarative JSON or JavaScript object schema attributes <code>isRequired</code> and <code>errorText</code> facilitate a validation engine that is comprehensive, accessible and easy to maintain. 

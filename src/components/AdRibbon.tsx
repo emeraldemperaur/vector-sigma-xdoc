@@ -71,7 +71,9 @@ const AdRibbon = ({
             justifyContent: "center", 
             alignItems: "center",
             width: "100%",
+            height: "69px",
             maxWidth: "970px", 
+            maxHeight: "100px !important"
           }}
         >
           {children ? children : (
