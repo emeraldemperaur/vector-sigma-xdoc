@@ -10,6 +10,8 @@ import { DocumentationViewer } from "./components/DocumentationViewer";
 import Showcase from "./pages/Showcase";
 import Integrations from "./pages/Integrations";
 import XFormComponent from "./pages/XFormComponent";
+import AirflowDAGShowcase from "./pages/AirflowShowcase";
+import N8NShowcase from "./pages/N8NShowcase";
 
 function App() {
 
@@ -35,6 +37,8 @@ function App() {
         <Route path='documentation' element={<DocumentationViewer darkMode={isDarkMode}/>}/>
         <Route path='components' element={<XFormComponent darkMode={isDarkMode}/>}/>
         <Route path='showcase' element={<Showcase darkMode={isDarkMode}/>}/>
+        <Route path='showcase/n8n' element={<N8NShowcase darkMode={isDarkMode}/>}/>
+        <Route path='showcase/airflow' element={<AirflowDAGShowcase darkMode={isDarkMode}/>}/>
         <Route path='integrations' element={<Integrations darkMode={isDarkMode}/>}/>
       </Routes>
       <FooterSection darkMode={isDarkMode}/>

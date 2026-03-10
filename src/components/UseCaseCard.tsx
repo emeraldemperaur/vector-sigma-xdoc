@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Box, Flex, Text, Tabs, IconButton } from '@radix-ui/themes';
-import { CodeIcon, ImageIcon, CopyIcon, CheckIcon } from '@radix-ui/react-icons';
+import { CodeIcon, ImageIcon, CopyIcon, CheckIcon, FileTextIcon } from '@radix-ui/react-icons';
+import { NavLink } from 'react-router-dom';
 
 export type UseCaseDesign = 'outline' | 'material' | 'neumorphic';
 
@@ -18,9 +19,13 @@ export interface UseCaseProps {
    */
   useCaseSynopsis?: string;
   /**
-   * * Optional file name label for the use case.
+   * * Optional file name label for the code snippet.
    */
   fileNameLabel?: string;
+  /**
+   * * Optional file name label for the schema snippet.
+   */
+  schemaFileNameLabel?: string;
   /**
    * * Optional React Node for the icon aligned to the far right.
    */
@@ -39,6 +44,10 @@ export interface UseCaseProps {
    * * The raw code string to display in the Code tab.
    */
   codeString: string;
+  /**
+   * * The raw schema string (JSON/JS object) to display in the Schema tab.
+   */
+  schemaString?: string;
   /**
    * * The URL of the image/screenshot to display in the Render tab.
    */
@@ -70,6 +79,10 @@ export interface UseCaseProps {
    * * Right margin spacing.
    */
   marginRight?: string | number;
+  /**
+   * * Optional screenshot url for React Router NavLink.
+   */
+  pageUrl?: string;
 }
 
 export const UseCaseCard = ({
@@ -77,29 +90,44 @@ export const UseCaseCard = ({
   useCaseDescription,
   useCaseSynopsis,
   fileNameLabel,
+  schemaFileNameLabel,
   icon,
   design = 'material',
   darkMode = false,
   codeString,
+  schemaString,
   imageSrc,
   contentHeight = '400px',
   tabFontSize = '18px', 
   marginTop,
   marginBottom,
   marginLeft,
-  marginRight
+  marginRight,
+  pageUrl = '/showcase'
 }: UseCaseProps) => {
 
-  const [copied, setCopied] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [copiedSchema, setCopiedSchema] = useState(false);
   const [activeTab, setActiveTab] = useState('render');
 
-  const handleCopy = async () => {
+  const handleCopyCode = async () => {
     try {
       await navigator.clipboard.writeText(codeString);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopiedCode(true);
+      setTimeout(() => setCopiedCode(false), 2000);
     } catch (err) {
       console.error('Failed to copy code: ', err);
+    }
+  };
+
+  const handleCopySchema = async () => {
+    if (!schemaString) return;
+    try {
+      await navigator.clipboard.writeText(schemaString);
+      setCopiedSchema(true);
+      setTimeout(() => setCopiedSchema(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy schema: ', err);
     }
   };
 
@@ -171,7 +199,7 @@ export const UseCaseCard = ({
             {useCaseDescription}
           </Text>
           
-          {/* NEW: Use Case Synopsis Section */}
+          {/* Use Case Synopsis Section */}
           {useCaseSynopsis && (
             <Text 
               as="p"
@@ -216,25 +244,7 @@ export const UseCaseCard = ({
               gap: '24px'
             }}
           >
-              <Tabs.Trigger 
-                value="code" 
-                style={{ 
-                  cursor: 'pointer', 
-                  color: activeTab === 'code' ? themeVars.accent : themeVars.subText, 
-                  fontSize: tabFontSize,
-                  fontWeight: 500,
-                  fontFamily: "Libre Franklin",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  transition: 'color 0.2s ease'
-                }}
-              >
-              <Flex align="center" gap="2">
-                <CodeIcon width={tabFontSize} height={tabFontSize} />
-                &nbsp;Code
-              </Flex>
-              </Tabs.Trigger>
-              <Tabs.Trigger 
+            <Tabs.Trigger 
                 value="render" 
                 style={{ 
                   cursor: 'pointer', 
@@ -251,7 +261,48 @@ export const UseCaseCard = ({
                 <ImageIcon width={tabFontSize} height={tabFontSize} />
                 &nbsp;Render
               </Flex>
+            </Tabs.Trigger>
+
+            {/* NEW SCHEMA TAB */}
+            {schemaString && (
+              <Tabs.Trigger 
+                value="schema" 
+                style={{ 
+                  cursor: 'pointer', 
+                  color: activeTab === 'schema' ? themeVars.accent : themeVars.subText, 
+                  fontSize: tabFontSize,
+                  fontWeight: 500,
+                  fontFamily: "Libre Franklin",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  transition: 'color 0.2s ease'
+                }}
+              >
+              <Flex align="center" gap="2">
+                <FileTextIcon width={tabFontSize} height={tabFontSize} />
+                &nbsp;Schema
+              </Flex>
               </Tabs.Trigger>
+            )}
+
+            <Tabs.Trigger 
+                value="code" 
+                style={{ 
+                  cursor: 'pointer', 
+                  color: activeTab === 'code' ? themeVars.accent : themeVars.subText, 
+                  fontSize: tabFontSize,
+                  fontWeight: 500,
+                  fontFamily: "Libre Franklin",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  transition: 'color 0.2s ease'
+                }}
+              >
+              <Flex align="center" gap="2">
+                <CodeIcon width={tabFontSize} height={tabFontSize} />
+                &nbsp;Code
+              </Flex>
+            </Tabs.Trigger>
           </Tabs.List>
         </Flex>
 
@@ -265,11 +316,76 @@ export const UseCaseCard = ({
             position: 'relative'
           }}
         >
-          
+          <Tabs.Content value="render" style={{ height: '100%', margin: 0 }}>
+            <NavLink to={pageUrl} target='_self'>
+            <img 
+              src={imageSrc} 
+              alt={useCaseDescription}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'fill', 
+                padding: '16px',
+                boxSizing: 'border-box'
+              }}
+            />
+            </NavLink>
+          </Tabs.Content>
+
+          {/* NEW SCHEMA TAB CONTENT */}
+          {schemaString && (
+            <Tabs.Content value="schema" style={{ height: '100%', margin: 0 }}>
+              <Flex direction="column" style={{ height: '100%' }}>
+                <Flex 
+                  align="center" 
+                  justify="between" 
+                  style={{ 
+                    padding: '8px 16px', 
+                    backgroundColor: themeVars.innerHeaderBg,
+                    borderBottom: themeVars.innerBorder,
+                    zIndex: 2 
+                  }}
+                >
+                  <Text size="2" style={{ color: themeVars.subText, fontFamily: 'monospace', letterSpacing: '0.05em' }}>
+                    {schemaFileNameLabel || "schema.ts"}
+                  </Text>
+
+                  <IconButton 
+                    variant="ghost" 
+                    size="1" 
+                    onClick={handleCopySchema}
+                    title={copiedSchema ? "Copied!" : "Copy schema"}
+                    style={{ 
+                      color: copiedSchema ? 'var(--green-9)' : themeVars.subText, 
+                      cursor: 'pointer',
+                      transition: 'color 0.2s ease',
+                      margin: 0
+                    }}
+                  >
+                    {copiedSchema ? <CheckIcon width="16" height="16" /> : <CopyIcon width="16" height="16" />}
+                  </IconButton>
+                </Flex>
+
+                <Box style={{ flexGrow: 1, overflow: 'auto', padding: '16px' }}>
+                  <pre style={{ margin: 0, padding: 0, background: 'transparent' }}>
+                    <code style={{ 
+                      fontFamily: 'var(--code-font-family, "Consolas", "Monaco", monospace)',
+                      fontSize: '13px',
+                      lineHeight: 1.6,
+                      color: darkMode ? '#e0e0e0' : '#24292e',
+                      whiteSpace: 'pre',
+                    }}>
+                      {schemaString}
+                    </code>
+                  </pre>
+                </Box>
+              </Flex>
+            </Tabs.Content>
+          )}
+
+          {/* CODE TAB CONTENT */}
           <Tabs.Content value="code" style={{ height: '100%', margin: 0 }}>
-            {/* FIX: Moved the flex layout to an inner container so Radix can still hide the tab! */}
             <Flex direction="column" style={{ height: '100%' }}>
-              {/* NEW: Code Block Header w/ Copy Button */}
               <Flex 
                 align="center" 
                 justify="between" 
@@ -287,27 +403,20 @@ export const UseCaseCard = ({
                 <IconButton 
                   variant="ghost" 
                   size="1" 
-                  onClick={handleCopy}
-                  title={copied ? "Copied!" : "Copy code"}
+                  onClick={handleCopyCode}
+                  title={copiedCode ? "Copied!" : "Copy code"}
                   style={{ 
-                    color: copied ? 'var(--green-9)' : themeVars.subText, 
+                    color: copiedCode ? 'var(--green-9)' : themeVars.subText, 
                     cursor: 'pointer',
                     transition: 'color 0.2s ease',
                     margin: 0
                   }}
                 >
-                  {copied ? <CheckIcon width="16" height="16" /> : <CopyIcon width="16" height="16" />}
+                  {copiedCode ? <CheckIcon width="16" height="16" /> : <CopyIcon width="16" height="16" />}
                 </IconButton>
               </Flex>
 
-              {/* Code Content Area (scrolls independently of the header) */}
-              <Box 
-                style={{ 
-                  flexGrow: 1, 
-                  overflow: 'auto', 
-                  padding: '16px' 
-                }}
-              >
+              <Box style={{ flexGrow: 1, overflow: 'auto', padding: '16px' }}>
                 <pre style={{ margin: 0, padding: 0, background: 'transparent' }}>
                   <code style={{ 
                     fontFamily: 'var(--code-font-family, "Consolas", "Monaco", monospace)',
@@ -321,20 +430,6 @@ export const UseCaseCard = ({
                 </pre>
               </Box>
             </Flex>
-          </Tabs.Content>
-          
-          <Tabs.Content value="render" style={{ height: '100%', margin: 0 }}>
-            <img 
-              src={imageSrc} 
-              alt={useCaseDescription}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'fill', 
-                padding: '16px',
-                boxSizing: 'border-box'
-              }}
-            />
           </Tabs.Content>
 
         </Box>

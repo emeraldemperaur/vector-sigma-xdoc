@@ -79,7 +79,8 @@ const ProductRibbon = ({
             </Text>
 
             <Box style={{ fontSize: "48px" }}>
-              {icon}
+              <a href="https://www.npmjs.com/package/@emeraldemperaur/vector-sigma" target="_blank"
+              style={{textDecoration: 'none', color: textColor}}>{icon}</a>
             </Box>
 
             <Text 

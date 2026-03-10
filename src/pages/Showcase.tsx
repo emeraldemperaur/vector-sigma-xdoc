@@ -2,7 +2,10 @@ import { useEffect } from "react";
 import { PageTitle } from "../components/PageTitle";
 import AdRibbon from "../components/AdRibbon";
 import { UseCaseCard } from "../components/UseCaseCard";
-import { xFormCodeUsageSnippet } from "../utils/xFormCodeSnippetString";
+import { xFormAirflowDAGSchemaSnippet, xFormCodeAirflowUsageSnippet, xFormCodeN8NUsageSnippet, xFormN8NSchemaSnippet } from "../utils/xFormSchemaSnippetStrings";
+import airflowDemoImage from "../assets/airflow_dagnode_render.png";
+import n8nwebhookDemoImage from "../assets/n8n_webhook_render.png";
+
 
 const Showcase = ({darkMode}: {darkMode: boolean}) => {
     useEffect(()=>{
@@ -15,9 +18,12 @@ const Showcase = ({darkMode}: {darkMode: boolean}) => {
         useCaseDescription="N8N Webhook Trigger Node"
         useCaseSynopsis="Guest details data capture for N8N Webhook Trigger Node of a hospitality automation workflow to capture reservation requests and manage confirmations using AI voice agents."
         fileNameLabel="N8NAutomation.tsx"
-        codeString={xFormCodeUsageSnippet}
-        imageSrc="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=800&q=80"
-        contentHeight={"400px"}
+        codeString={xFormCodeN8NUsageSnippet}
+        pageUrl="showcase/n8n"
+        schemaFileNameLabel="xFormN8NSchema.ts"
+        schemaString={xFormN8NSchemaSnippet}
+        imageSrc={n8nwebhookDemoImage}
+        contentHeight={"763px"}
         tabFontSize="19px"
         marginLeft={"33px"}
         marginRight={"33px"}
@@ -38,11 +44,14 @@ const Showcase = ({darkMode}: {darkMode: boolean}) => {
               </AdRibbon>
         <UseCaseCard design="neumorphic" darkMode={darkMode} useCaseLabel="USECASE #002"
         useCaseDescription="Client Onboarding Data Pipeline"
-        useCaseSynopsis="Client profile information data capture node for onboarding normalized or sanitized new user account details into a SaaS application, database or data warehouse."
+        useCaseSynopsis="Client information data capture DAG node for onboarding normalized new user account details into a SaaS application, database or data warehouse."
         fileNameLabel="AirflowDAGNode.tsx"
-        codeString={xFormCodeUsageSnippet}
-        imageSrc="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=800&q=80"
-        contentHeight={"400px"}
+        codeString={xFormCodeAirflowUsageSnippet}
+        pageUrl="showcase/airflow"
+        schemaFileNameLabel="xFormDAGSchema.ts"
+        schemaString={xFormAirflowDAGSchemaSnippet}
+        imageSrc={airflowDemoImage}
+        contentHeight={"1000px"}
         tabFontSize="19px"
         marginLeft={"33px"}
         marginRight={"33px"}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Grid, Heading, Text, Section, Container, Card } from "@radix-ui/themes";
 import { NavLink as NavigationLink } from 'react-router-dom';
 import { CodeSnippet } from "./documentation/CodeSnippet";
-import { statefulUsageSnippet, xForm97, xFormCodeSnippet, xFormCodeUsageSnippet, xFormFileDataCodeString, xFormRegistrationCodeString, xFormRenderOption } from "../utils/xFormCodeSnippetString";
+import { statefulUsageSnippet, xForm97, xFormCodeSnippet, xFormCodeUsageSnippet, xFormFileDataCodeString, xFormRegistrationCodeString, xFormRenderOption } from "../utils/xFormCodeSnippetStrings";
 import { TabItem, TabSwitcher } from "./documentation/TabSwitcher";
 import AdRibbon from "./AdRibbon";
 import { GoogleAd } from "./GoogleAd";

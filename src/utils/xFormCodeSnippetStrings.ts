@@ -678,7 +678,7 @@ import { VectorSigma } from '@emeraldemperaur/vector-sigma';
 
 export const VΣRegistrationForm = () => {
     
-    const xFormBuilder = VectorSigma(apiXFormData)
+    const xFormBuilder = new VectorSigma(apiXFormData)
         .setName('VΣ Registration Form')
         .setBrand("brandHexColor", "www.exampleurl.com/logoimage.png", 'right');
 
