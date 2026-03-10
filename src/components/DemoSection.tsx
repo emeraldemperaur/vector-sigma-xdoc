@@ -2,6 +2,7 @@ import { Box, Flex, Text, Section, Container, Heading } from "@radix-ui/themes";
 import { NavLink } from "react-router-dom";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import codiceDisplayMode from '../assets/codice_display_mode_with_bgc.png';
 
 interface DemoSectionProps {
   darkMode?: boolean;
@@ -103,6 +104,9 @@ export const VΣRegistrationForm = () => {
     <Section
       style={{
         width: "100%",
+        maxWidth: "100vw",       // FIX: Prevents Windows scrollbar width bug
+        boxSizing: "border-box", // FIX: Accounts for any stray padding
+        overflowX: "hidden",     // ABSOLUTE FIX: Kills page-level horizontal scroll entirely
         backgroundColor: pageBg,
         padding: "0px 0",
       }}
@@ -117,7 +121,7 @@ export const VΣRegistrationForm = () => {
                 marginBottom: '16px',
                 color: defaultHeadingText,
                 marginTop: '33px'}}>
-               Implementation&nbsp;<i className="fa-solid fa-code"></i>
+                Implementation&nbsp;<i className="fa-solid fa-code"></i>
               </Heading>
                <Text 
                   as="p" 
@@ -148,6 +152,10 @@ export const VΣRegistrationForm = () => {
             className="demo-pane"
             style={{
               flex: 1,
+              minWidth: 0,
+              maxWidth: "100%",          // FIX: Strict boundary
+              boxSizing: "border-box",   // FIX: Prevents the 24px padding from expanding the box
+              overflowX: "auto",         // FIX: Allows the user to scroll the code block horizontally
               backgroundColor: "#1e1e1e",
               padding: "24px",
               minHeight: "350px",
@@ -167,7 +175,8 @@ export const VΣRegistrationForm = () => {
                 margin: 0, 
                 padding: 0, 
                 background: "transparent", 
-                fontSize: "14px" 
+                fontSize: "14px",
+                overflowX: "auto"        // Ensures the internal <pre> tag respects scrolling
               }}
             >
               {vectorSigmaCode}
@@ -185,34 +194,43 @@ export const VΣRegistrationForm = () => {
           <Flex align="center" justify="center">
             <Box className="demo-separator" />
           </Flex>
+
           <Box
             className="demo-pane"
             style={{
               flex: 1,
+              minWidth: 0,
+              maxWidth: "100%",         
+              boxSizing: "border-box",   
               backgroundColor: col2Bg,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              padding: "24px",
+              padding: "0px",
               minHeight: "350px",
               ...paneShadow,
             }}
           >
+            {/* UPDATED IMAGE CONTAINER */}
             <Box 
               style={{ 
                 width: "100%", 
-                maxWidth: "300px",
-                height: "200px", 
-                border: darkMode ? "2px dashed #444" : "2px dashed #ccc",
-                borderRadius: "8px",
+                height: "100%", 
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center"
+                justifyContent: "center",
+                overflow: "hidden"
               }}
             >
-              <Text style={{ color: darkMode ? "#888" : "#999" }}>
-                [ Rendered Form Image Here ]
-              </Text>
+               <img 
+                 src={codiceDisplayMode} 
+                 alt="Dual Display Mode"
+                 style={{
+                   width: '100%', 
+                   height: '100%',
+                   objectFit: 'fill' // Scales up nicely without cropping or distorting
+                 }} 
+               />
             </Box>
 
             {column2DisplayText && (

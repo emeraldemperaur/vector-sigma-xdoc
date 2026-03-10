@@ -6,8 +6,10 @@ import { statefulUsageSnippet, xForm97, xFormCodeSnippet, xFormCodeUsageSnippet,
 import { TabItem, TabSwitcher } from "./documentation/TabSwitcher";
 import AdRibbon from "./AdRibbon";
 import { GoogleAd } from "./GoogleAd";
-
-
+import accordionDisplayMode from '../assets/accordion_display_mode.png';
+import codexDisplayMode from '../assets/codex_display_mode.png';
+import codiceDisplayMode from '../assets/codice_display_mode.png';
+import dualDisplayMode from '../assets/dual_display_mode.png';
 
 
 const DocSection = ({ id, title, children }: { id: string; title: string | React.ReactNode; children?: React.ReactNode }) => (
@@ -271,10 +273,10 @@ export const DocumentationViewer = ({
                 />
                 <h3 className="doc-text">Display Mode Variants</h3>
                 <TabSwitcher design="outline" darkMode={darkMode} neonColor={activeColor} contentHeight={"696px"}>
-                  <TabItem value="codex" label="Codex" imageSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"></TabItem>
-                  <TabItem value="codice" label="Codice" imageSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"></TabItem>
-                  <TabItem value="accordion" label="Accordion" imageSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"></TabItem>
-                  <TabItem value="dual" label="Dual" imageSrc="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"></TabItem>
+                  <TabItem value="codex" label="Codex" imageSrc={codexDisplayMode}></TabItem>
+                  <TabItem value="codice" label="Codice" imageSrc={codiceDisplayMode}></TabItem>
+                  <TabItem value="accordion" label="Accordion" imageSrc={accordionDisplayMode}></TabItem>
+                  <TabItem value="dual" label="Dual" imageSrc={dualDisplayMode}></TabItem>
                 </TabSwitcher>
               </DocSection>
               

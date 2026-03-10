@@ -19,7 +19,7 @@ const Showcase = ({darkMode}: {darkMode: boolean}) => {
         useCaseSynopsis="Guest details data capture for N8N Webhook Trigger Node of a hospitality automation workflow to capture reservation requests and manage confirmations using AI voice agents."
         fileNameLabel="N8NAutomation.tsx"
         codeString={xFormCodeN8NUsageSnippet}
-        pageUrl="showcase/n8n"
+        pageUrl="/showcase/n8n"
         schemaFileNameLabel="xFormN8NSchema.ts"
         schemaString={xFormN8NSchemaSnippet}
         imageSrc={n8nwebhookDemoImage}
@@ -47,7 +47,7 @@ const Showcase = ({darkMode}: {darkMode: boolean}) => {
         useCaseSynopsis="Client information data capture DAG node for onboarding normalized new user account details into a SaaS application, database or data warehouse."
         fileNameLabel="AirflowDAGNode.tsx"
         codeString={xFormCodeAirflowUsageSnippet}
-        pageUrl="showcase/airflow"
+        pageUrl="/showcase/airflow"
         schemaFileNameLabel="xFormDAGSchema.ts"
         schemaString={xFormAirflowDAGSchemaSnippet}
         imageSrc={airflowDemoImage}
