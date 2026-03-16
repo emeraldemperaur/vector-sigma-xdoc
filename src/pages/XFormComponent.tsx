@@ -10,7 +10,7 @@ const XFormComponent = ({darkMode}: {darkMode: boolean}) => {
     return(
         <>
         <PageTitle variant="material" title="Form Components" darkMode={darkMode} icon={<>χ</>}/>
-        <ChromaticEmbed src="https://69ae1e2c772d79457e37fbad-zhvolbxhpp.chromatic.com/"/>
+        <ChromaticEmbed src="https://69ae1e2c772d79457e37fbad-azeivijwpt.chromatic.com/"/>
         <AdRibbon darkMode={darkMode}>
                  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3704334287285175"
                         crossOrigin="anonymous"></script>
