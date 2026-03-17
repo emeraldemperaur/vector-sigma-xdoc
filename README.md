@@ -31,7 +31,7 @@ Fields, Input Validation and Submission callback() can be defined and parametize
 ### Documentation
 <ul>
 <li><a href="https://vector-sigma.netlify.app/" target="_blank">VΣ Documentation</a></li>
-<li><a href="https://69ae1e2c772d79457e37fbad-azeivijwpt.chromatic.com/" target="_blank">χForm Components Storybook</a></li>
+<li><a href="https://69ae1e2c772d79457e37fbad-ivjtqzruax.chromatic.com/" target="_blank">χForm Components Storybook</a></li>
 <li><a href="https://github.com/emeraldemperaur/vector-sigma">VΣ Repository</a></li>
 <ul>
 
@@ -132,8 +132,10 @@ export const VΣRegistrationForm = () => {
 ### Screenshots
 
 #### Automation Workflow (N8N Webhook Trigger Node) Use Case
+![alt text](/teletraan1/n8n_demoshowcase.png)
 
 #### Web Application (User Onboarding Data Pipeline) Use Case
+![alt text](/teletraan1/airflow_demoshowcase.png)
 
 ### Design Tenets
 <ul>
