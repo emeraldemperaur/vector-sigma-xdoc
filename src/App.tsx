@@ -15,7 +15,7 @@ import N8NShowcase from "./pages/N8NShowcase";
 
 function App() {
 
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
   useEffect(() => {
 
   }, [isDarkMode]);
@@ -31,6 +31,7 @@ function App() {
     py={{ initial: "4", md: "6" }}
     style={{ boxSizing: "border-box" }}
     >
+     
      <NavigationMenu darkModeToggle={toggleDarkMode} darkMode={isDarkMode}/>
      <Routes>
         <Route path='/' element={<Maison darkMode={isDarkMode}/>}/>

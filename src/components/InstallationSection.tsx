@@ -32,95 +32,100 @@ const InstallSection = ({
     }
   };
 
-  // 1. Theme Colors
-  const defaultBg = darkMode ? "#000000" : "#ffffff";
-  const defaultText = darkMode ? "#ffffff" : "#000000";
+  const sectionBg = darkMode ? "#000000" : "#fafafa";
+  const surfaceBg = backgroundColorOverride || (darkMode ? "#0a0a0a" : "#ffffff");
+  const txtColor = textColorOverride || (darkMode ? "#f9fafb" : "#111827");
+  const mutedTxtColor = darkMode ? "#9ca3af" : "#6b7280";
+  const borderColor = darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.08)";
+  const terminalBg = darkMode ? "#000000" : "#f3f4f6";
 
-  const cardBg = backgroundColorOverride || defaultBg;
-  const txtColor = textColorOverride || defaultText;
-
-  // 2. Card-Specific Shadows & Borders
   const cardStyles = variant === "neumorphic"
     ? {
-        boxShadow: darkMode
-          ? "10px 10px 20px #0a0a0a, -10px -10px 20px #242424" 
-          : "10px 10px 20px #d9d9d9, -10px -10px 20px #ffffff", 
-        border: "none", // Neumorphism relies purely on shadows, no borders
+        boxShadow: darkMode 
+          ? "0 20px 40px -10px rgba(0,0,0,0.8)" 
+          : "0 20px 40px -10px rgba(0,0,0,0.05)",
+        border: `1px solid ${borderColor}`,
         borderRadius: "16px",
       }
     : {
-        boxShadow: darkMode
-          ? "0 8px 12px -2px rgba(255, 255, 255, 0.05)"
-          : "0 8px 24px -4px rgba(0, 0, 0, 0.1)", // A softer, wider shadow for Material cards
-        border: darkMode ? "1px solid #333333" : "1px solid #eaeaea",
+        boxShadow: "none",
+        border: `1px solid ${borderColor}`,
         borderRadius: "12px",
       };
 
   return (
     <Section
       style={{
-        backgroundColor: darkMode ? "#000000" : "#ffffff", // Slight contrast behind the card
+        backgroundColor: sectionBg,
         width: "100%",
-        padding: "57px 0",
+        padding: "80px 24px", 
       }}
     >
       <Container size="3">
         <Card
-          size="4"
           style={{
-            marginLeft:" 23px",
-            marginRight: "23px",
-            backgroundColor: cardBg,
+            backgroundColor: surfaceBg,
             color: txtColor,
+            maxWidth: "800px", 
+            margin: "0 auto",
             ...cardStyles,
+            overflow: "hidden"
           }}
         >
-          <Flex direction="column" gap="5" p="4">
+          <Flex direction="column" style={{ padding: "40px" }}>
             
-            <Box style={{ marginLeft: "23px" }}>
-              <Heading size="7" weight="bold" 
-              style={{
-                fontSize: '26px', 
-                letterSpacing: "0.06em",
-                fontFamily: 'Libre Baskerville', 
-                marginTop: '13px'}}>
-               {title}&nbsp;<i className="fa-solid fa-box-archive"></i>
+            <Box style={{ marginBottom: "24px" }}>
+              <Heading 
+                size="7" 
+                weight="bold" 
+                style={{
+                  fontFamily: "Libre Baskerville, -apple-system, BlinkMacSystemFont, sans-serif", 
+                  fontSize: '24px', 
+                  letterSpacing: "-0.02em",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  margin: 0
+                }}
+              >
+                {title} <i className="fa-solid fa-box-archive" style={{ fontSize: "20px", color: mutedTxtColor }}></i>
               </Heading>
+              
               {subtitle && (
                 <Text 
                   as="p" 
-                  size="4" 
-                  mt="2" 
+                  size="3" 
                   style={{ 
-                    opacity: 0.7,
-                    fontFamily: 'Libre Franklin',
-                    letterSpacing: "0.06em",
-                    marginBottom: "13px"
+                    color: mutedTxtColor,
+                    fontFamily: "Libre Franklin, -apple-system, BlinkMacSystemFont, sans-serif",
+                    letterSpacing: "0.01em",
+                    lineHeight: "1.6",
+                    marginTop: "8px",
+                    marginBottom: 0
                  }}
                 >
                   {subtitle}
                 </Text>
               )}
             </Box>
-            <Box
+
+            <Flex
+              align="center"
+              justify="between"
               style={{
-                marginLeft: "33px",
-                marginRight: "33px",
-                marginBottom: "33px",
-                backgroundColor: darkMode ? "#1a1a1a" : "#f4f4f5",
+                backgroundColor: terminalBg,
                 borderRadius: "8px",
-                padding: "16px 24px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                border: variant === "material" && !darkMode ? "1px solid #e4e4e7" : "none",
+                padding: "16px 20px",
+                border: `1px solid ${borderColor}`,
+                width: "100%",
+                boxSizing: "border-box"
               }}
             >
               <Text 
                 style={{ 
-                  fontFamily: "monospace", 
-                  fontSize: "16px",
-                  color: darkMode ? "#e5e5e5" : "#111827" 
+                  fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", 
+                  fontSize: "15px",
+                  color: txtColor 
                 }}
               >
                 {command}
@@ -131,20 +136,27 @@ const InstallSection = ({
                 title="Copy to clipboard"
                 aria-label="Copy installation command"
                 style={{
-                  background: "transparent",
+                  background: isCopied ? (darkMode ? "rgba(16, 185, 129, 0.1)" : "#d1fae5") : "transparent",
                   border: "none",
                   cursor: "pointer",
-                  color: darkMode ? "#a1a1aa" : "#52525b",
+                  color: isCopied ? "#10b981" : mutedTxtColor,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   padding: "8px",
-                  transition: "color 0.2s ease",
+                  borderRadius: "6px",
+                  transition: "all 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isCopied) e.currentTarget.style.backgroundColor = darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)";
+                }}
+                onMouseLeave={(e) => {
+                  if (!isCopied) e.currentTarget.style.backgroundColor = "transparent";
                 }}
               >
-                {isCopied ? <CheckIcon width="20" height="20" color="#10b981" /> : <CopyIcon width="20" height="20" />}
+                {isCopied ? <CheckIcon width="20" height="20" /> : <CopyIcon width="20" height="20" />}
               </button>
-            </Box>
+            </Flex>
 
           </Flex>
         </Card>

@@ -49,7 +49,7 @@ const FeaturesRibbon = ({
   ];
 
   const data = features || defaultFeatures;
-  const ribbonBg = darkMode ? "#1b1c1d" : "#f3f4f6";
+  const ribbonBg = darkMode ? "#000000" : "#f3f4f6";
   const iconColor = darkMode ? "#9ca3af" : "#6b7280"; 
   const titleColor = darkMode ? "#d1d5db" : "#111827"; 
   const descColor = darkMode ? "#8b929e" : "#4b5563"; 

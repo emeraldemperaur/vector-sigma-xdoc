@@ -27,8 +27,8 @@ const Maison = ( {darkMode}: {darkMode: boolean}) => {
     return(
         <>
         <br/>
-        <ProductRibbon darkMode={darkMode} title="V&Sigma;CTOR &Sigma;" subtitle="Dynamic Form Orchestrator"
-        description="Vector Sigma is a dynamic form orchestrator package for rapidly creating and managing the complex lifecycle of interactive extensible input forms 
+        <ProductRibbon darkMode={darkMode} title="V&Sigma;CTOR &Sigma;" subtitle="Declarative Form Engine"
+        description="Vector Sigma is a declarative form engine package for rapidly creating and managing the complex lifecycle of interactive extensible input forms 
         that can be easily embedded into a React front-end client interface for use in data pipelines, onboarding applications or automation workflows. 
         Customizable to fit seamlessly into an existing design system and enable agile developer control of the visual layer and theming." 
         icon={<i className="fa-brands fa-npm"></i>} />
@@ -48,7 +48,7 @@ const Maison = ( {darkMode}: {darkMode: boolean}) => {
               </AdRibbon>
         <FeaturesRibbon darkMode={darkMode}/>
         <CodeDemoSection darkMode={darkMode}/>
-        <IntegrationsSection darkMode={darkMode}
+        <IntegrationsSection darkMode={true}
         items={[
             {
                 integrationUrl: "https://n8n.io/",

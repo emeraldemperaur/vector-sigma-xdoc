@@ -147,7 +147,7 @@ export const UseCaseCard = ({
       containerBorder: isOut ? (darkMode ? '1px solid #495057' : '1px solid #dee2e6') : 'none',
       
       innerBg: darkMode ? '#121212' : '#f8f9fa',
-      innerHeaderBg: darkMode ? '#1e1e1e' : '#e9ecef', // Slightly offset from innerBg for the code header
+      innerHeaderBg: darkMode ? '#1e1e1e' : '#e9ecef', 
       innerBorder: darkMode ? '1px solid #333' : '1px solid #e9ecef',
     };
   }, [design, darkMode]);
@@ -199,7 +199,6 @@ export const UseCaseCard = ({
             {useCaseDescription}
           </Text>
           
-          {/* Use Case Synopsis Section */}
           {useCaseSynopsis && (
             <Text 
               as="p"
@@ -212,7 +211,7 @@ export const UseCaseCard = ({
                 fontWeight: 400,
                 marginTop: "8px",
                 textAlign: "justify",
-                maxWidth: "700px" // Prevents text from stretching too wide on large screens
+                maxWidth: "700px" 
               }}
             >
               {useCaseSynopsis}

@@ -1,39 +1,27 @@
-import { Box, Flex, Text, Heading, Link, Container } from "@radix-ui/themes";
+import { Text, Heading, Link, Container } from "@radix-ui/themes";
 import { GitHubLogoIcon, InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import devLogoLight from '../assets/me-dev-logo-black.png';
+import devLogoDark from '../assets/me-dev-logo-white.png';
+
 
 interface FooterSectionProps {
   darkMode?: boolean;
-  variant?: "neumorphic" | "material";
+  variant?: "neumorphic" | "material"; 
   backgroundColorOverride?: string;
   textColorOverride?: string;
 }
 
-const openPortfolio = () => {
-    window.open('https://www.mekaegwim.ca', '_blank')
-}
-
 const FooterSection = ({
   darkMode = false,
-  variant = "neumorphic",
   backgroundColorOverride,
   textColorOverride,
 }: FooterSectionProps) => {
 
-  const defaultBg = darkMode ? "#121316" : "#e5e7eb"; 
-  const defaultText = darkMode ? "#9ca3af" : "#4b5563"; 
-  const headingColor = darkMode ? "#f3f4f6" : "#111827"; 
-  const bgColor = backgroundColorOverride || defaultBg;
-  const txtColor = textColorOverride || defaultText;
-
-  const footerShadow = variant === "neumorphic"
-    ? {
-        boxShadow: darkMode
-          ? "inset 0px 12px 16px -8px rgba(0,0,0,0.6)" 
-          : "inset 0px 12px 16px -8px rgba(0,0,0,0.05), inset 0px -12px 16px -8px rgba(255,255,255,0.8)",
-      }
-    : {
-        borderTop: darkMode ? "1px solid #2d2d2d" : "1px solid #d1d5db",
-      };
+  const bgColor = backgroundColorOverride || (darkMode ? "#000000" : "#fafafa");
+  const txtColor = textColorOverride || (darkMode ? "#9ca3af" : "#6b7280");
+  const headingColor = darkMode ? "#f9fafb" : "#111827";
+  const hoverColor = darkMode ? "#ffffff" : "#000000";
+  const borderColor = darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.08)";
 
   const currentYear = new Date().getFullYear();
 
@@ -45,101 +33,174 @@ const FooterSection = ({
         backgroundColor: bgColor,
         color: txtColor,
         padding: "64px 24px 32px 24px", 
-        ...footerShadow,
+        borderTop: `1px solid ${borderColor}`,
+        fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
       }}
     >
-      <Container size="4">
-        <Flex 
-          direction={{ initial: "column", md: "row" }} 
-          justify="between" 
-          gap="6"
-          mb="6"
+      <Container size="4" style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        
+        <div 
+          style={{ 
+            display: "flex", 
+            justifyContent: "space-between", 
+            flexWrap: "wrap", 
+            gap: "48px", 
+            marginBottom: "48px" 
+          }}
         >
-          <Box style={{ flex: 1, maxWidth: "300px" }}>
-            <Heading size="5" 
-            style={{ 
+          <div style={{ flex: "1 1 300px", maxWidth: "400px" }}>
+            <Heading 
+              as="h3"
+              style={{ 
                 color: headingColor, 
-                letterSpacing: "0.06em",
-                fontFamily: "Libre Franklin",
-                fontWeight: 500,
-                }} mb="3">
-              VΣ :: VectorSigma
+                letterSpacing: "-0.02em",
+                fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                fontWeight: 600,
+                fontSize: "20px",
+                margin: "0 0 16px 0", 
+              }} 
+            >
+              VΣCTOR Σ
             </Heading>
-            <Text size="2" as="p"
-            style={{ 
+            <Text 
+              as="p"
+              style={{ 
                 lineHeight: "1.6",
+                color: txtColor,
                 fontFamily: "Libre Franklin",
-                textAlign: "justify",
-                marginTop: "13px",
-                marginBottom: "23px",
-                fontWeight: 300
-                }}>
-              Flexible, type-safe, and extensible form builder for React. Level up your data pipelines, automation workflows and API integrations with convenience methods and robust validation.
+                fontWeight: 400,
+                fontSize: "15px",
+                margin: 0,
+                textAlign: 'justify'
+              }}
+            >
+              Flexible, type-safe, and extensible declarative form engine for React. Level up your data pipelines, automation workflows and API integrations with convenience methods and robust validation.
             </Text>
-          </Box>
+          </div>
 
-          <Flex direction="column" gap="2" style={{fontFamily: "Libre Franklin"}}>
-            <Heading size="3" 
-            style={{ 
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px", minWidth: "200px" }}>
+            <Heading 
+              as="h4"
+              style={{ 
                 color: headingColor,
-                letterSpacing: "0.03em",
-                textTransform: "capitalize",
-                fontWeight: 600 
-                }} mb="1">Resources</Heading>
-            <Link style={{ cursor: "pointer", fontWeight: 500, color: txtColor }} 
-            target="_blank"
-            href="https://n8n.io/" color="gray" size="2">λ N8N Workflow Automation</Link>
-            <Link style={{ cursor: "pointer", fontWeight: 500, color: txtColor }} 
-            href="https://cloud.ibm.com/apidocs/watsonx-ai" 
-            target="_blank" color="gray" size="2">δ IBM Watsonx Orchestrate</Link>
-            <Link style={{ cursor: "pointer", fontWeight: 500, color: txtColor }} 
-            href="https://developer.adobe.com/firefly-services/docs/firefly-api/api/"
-            target="_blank" 
-            color="gray" size="2">Δ Adobe Firefly API</Link>
-            <Link style={{ cursor: "pointer", fontWeight: 500, color: txtColor }} 
-            href="https://lumalabs.ai/" target="_blank" color="gray" size="2">β Luma AI API</Link>
-          </Flex>
-          
-        </Flex>
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+                fontWeight: 600,
+                fontSize: "14px",
+                margin: "0 0 4px 0",
+              }} 
+            >
+              Resources
+            </Heading>
+            
+            {[
+              { label: "λ N8N Workflow Automation", href: "https://n8n.io/" },
+              { label: "δ IBM Watsonx Orchestrate", href: "https://cloud.ibm.com/apidocs/watsonx-ai" },
+              { label: "Δ Adobe Firefly API", href: "https://developer.adobe.com/firefly-services/docs/firefly-api/api/" },
+              { label: "β Luma AI API", href: "https://lumalabs.ai/" }
+            ].map((link, idx) => (
+              <Link 
+                key={idx}
+                href={link.href}
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  cursor: "pointer", 
+                  fontWeight: 400, 
+                  color: txtColor,
+                  textDecoration: "none",
+                  transition: "color 0.2s ease",
+                  fontSize: "14px",
+                  fontFamily: 'Libre Franklin'
+                }} 
+                onMouseEnter={(e) => e.currentTarget.style.color = hoverColor}
+                onMouseLeave={(e) => e.currentTarget.style.color = txtColor}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
 
-        <Box 
+        <div 
           style={{ 
             height: "1px", 
-            backgroundColor: darkMode ? "#2d2d2d" : "#d1d5db",
-            marginBottom: "24px"
+            width: "100%",
+            backgroundColor: borderColor,
+            margin: "0 0 24px 0" 
           }} 
         />
 
-        <Flex 
-          direction={{ initial: "column", sm: "row" }} 
-          justify="between" 
-          align="center"
-          gap="4"
+        <div 
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "24px"
+          }}
         >
-          <Text onClick={() => openPortfolio()} style={{
-            fontFamily: "Libre Franklin",
-            fontWeight: 500,
-            letterSpacing: "0.06em",
-            cursor: "pointer",
-            }} size="2">
-            &copy; {currentYear} VectorSigma | BUILD by ME
+          <Text 
+            style={{
+              fontFamily: "Libre Baskerville",
+              fontWeight: 400,
+              color: txtColor,
+              fontSize: "14px",
+              margin: 0
+            }}
+          >
+            &copy; {currentYear} VectorSigma |{" "}
+            <a 
+              href="https://www.mekaegwim.ca" 
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: txtColor,
+                textDecoration: "none",
+                fontWeight: 500,
+                transition: "color 0.2s ease",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px"
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.color = hoverColor}
+              onMouseLeave={(e) => e.currentTarget.style.color = txtColor}
+            >
+              BUILD by 
+              <img 
+                src={darkMode ? devLogoDark : devLogoLight} 
+                alt="Developer Logo" 
+                style={{ height: "33px", width: "auto", display: "block" }} 
+              />
+            </a>
           </Text>
 
-          <Flex gap="4">
-            <Link href="https://www.github.com/emeraldemperaur" color="gray" target="_blank"
-            style={{ display: "flex", alignItems: "center", cursor: "pointer", color: txtColor }}>
-              <GitHubLogoIcon width="20" height="20" />
-            </Link>
-            <Link href="https://www.instagram.com/chromito.me" color="gray" target="_blank"
-            style={{ display: "flex", alignItems: "center", cursor: "pointer", color: txtColor }}>
-              <InstagramLogoIcon width="20" height="20" />
-            </Link>
-            <Link href="https://ca.linkedin.com/in/emekaegwimdeveloper" color="gray" target="_blank"
-            style={{ display: "flex", alignItems: "center", cursor: "pointer", color: txtColor }}>
-              <LinkedInLogoIcon width="20" height="20" />
-            </Link>
-          </Flex>
-        </Flex>
+          <div style={{ display: "flex", gap: "20px" }}>
+            {[
+              { Icon: GitHubLogoIcon, href: "https://www.github.com/emeraldemperaur" },
+              { Icon: InstagramLogoIcon, href: "https://www.instagram.com/chromito.me" },
+              { Icon: LinkedInLogoIcon, href: "https://ca.linkedin.com/in/emekaegwimdeveloper" }
+            ].map((social, idx) => (
+              <Link 
+                key={idx}
+                href={social.href} 
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ 
+                  display: "flex", 
+                  alignItems: "center", 
+                  cursor: "pointer", 
+                  color: txtColor,
+                  transition: "color 0.2s ease"
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = hoverColor}
+                onMouseLeave={(e) => e.currentTarget.style.color = txtColor}
+              >
+                <social.Icon width="24" height="24" />
+              </Link>
+            ))}
+          </div>
+        </div>
 
       </Container>
     </footer>

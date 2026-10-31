@@ -67,12 +67,12 @@ export const PageTitle = ({
       style={{
         width: "100%",
         backgroundColor: pageBg,
-        padding: "64px 0", // Adequate spacing around the component
+        padding: "64px 0", 
       }}
     >
       <Container size="3" px={{ initial: "4", md: "6" }}>
         <Box
-          p={{ initial: "6", md: "8" }} // Inner padding for the content
+          p={{ initial: "6", md: "8" }} 
           style={{
             backgroundColor: containerBg,
             ...variantStyles,

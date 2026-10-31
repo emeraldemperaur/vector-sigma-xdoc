@@ -1,63 +1,59 @@
-import { NavLink, useNavigate  } from 'react-router-dom';
-import '../styles/main.scss';
+import { NavLink, Link } from 'react-router-dom';
 import { useState } from 'react';
+import '../styles/main.scss';
 
-const NavigationMenu = ({darkModeToggle, darkMode} : {darkModeToggle: () => void, darkMode: boolean}) => {
-    const navigator = useNavigate();
-    const homeNavigator = () => { navigator('/') };
-    const [logotext, setLogoText] = useState(<>V&Sigma;CTOR &sigma;</>);
+const NavigationMenu = ({ darkModeToggle, darkMode }: { darkModeToggle: () => void, darkMode: boolean }) => {
+    const [isHovered, setIsHovered] = useState(false);
+    const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-    const logo = document.getElementById('vectorsigma-logo');
+    const toggleMobile = () => setIsMobileOpen(!isMobileOpen);
+    const closeMobile = () => setIsMobileOpen(false);
 
-    if (logo) {
-        logo.addEventListener('mouseover', () => {
-            setLogoText(<>V&Sigma;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</>)
-        });
-        logo.addEventListener('mouseout', () => {
-            setLogoText(<>V&Sigma;CTOR &sigma;</>)
-        });
-    }
+    return (
+        <header className={`header-menu ${darkMode ? 'theme-dark' : 'theme-light'}`}>
+            <nav className="nav-container">
+                <div className="nav-wrapper">
+                    <Link 
+                        to="/" 
+                        className="logo"
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                        onClick={closeMobile}
+                    >
+                        <span className="logo-vector-text">
+                            {isHovered ? <>V&Sigma;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</> : <>V&Sigma;CTOR &sigma;</>}
+                        </span>
+                    </Link>
 
-   
+                    <div className={`nav-overlay ${isMobileOpen ? 'open' : ''}`} onClick={closeMobile}></div>
 
-    return(
-    <>
-    <>
-        <div className='header-menu'>
-        <nav>
-        <div className="wrapper">
-            <div className="logo" id='vectorsigma-logo'>
-                <NavLink to="/">
-                 <span onClick={homeNavigator} className='logo-vector-text'>{logotext}</span>
-                </NavLink>
-            </div>
-            <input type="radio" name="slider" id="menu-btn"/>
-            <input type="radio" name="slider" id="close-btn"/>
-            <ul className="nav-links">
-            <label htmlFor="close-btn" className="btn close-btn"><i className="fas fa-times"></i></label>
-            <li><NavLink style={({ isActive }) => isActive ? {background:'#000000', color: '#ffffff'} : {}} to="documentation">V&Sigma; Documentation</NavLink></li>
-            <li><NavLink style={({ isActive }) => isActive ? {background:'#000000', color: '#ffffff'} : {}} to="components">χForm Components</NavLink></li>
-            <li><NavLink style={({ isActive }) => isActive ? {background:'#000000', color: '#ffffff'} : {}} to="showcase">&Omega; Showcase</NavLink></li>
-            <li><NavLink style={({ isActive }) => isActive ? {background:'#000000', color: '#ffffff'} : {}} to="integrations">&alpha; Integrations</NavLink></li>
-            <li>
-            <a href='https://github.com/emeraldemperaur/vector-sigma' target='_blank'  className="desktop-item"><i className="header-menu-icon fa-brands fa-github"></i></a>
-            </li>
-            <li>
-            <a onClick={() => darkModeToggle()} className="desktop-item">
-                <i onClick={() => darkModeToggle()} className={`header-menu-icon ${darkMode ? 'fa-regular fa-lightbulb' : 'fa-regular fa-moon'}`}></i>
-            </a>
-            </li>
-            </ul>
-            <label htmlFor="menu-btn" className="btn menu-btn"><i className="mobile-menu-icon fas fa-bars"></i></label>
-        </div>
-        </nav>
-        </div>
-        </>
-    
-    
-    </>
-    )
+                    <ul className={`nav-links ${isMobileOpen ? 'mobile-open' : ''}`}>
+                        <button className="mobile-close-btn" onClick={closeMobile} aria-label="Close menu">
+                            <i className="fas fa-times"></i>
+                        </button>
+                        
+                        <li><NavLink to="documentation" onClick={closeMobile}>Documentation</NavLink></li>
+                        <li><NavLink to="components" onClick={closeMobile}>Components</NavLink></li>
+                        <li><NavLink to="showcase" onClick={closeMobile}>Showcase</NavLink></li>
+                        <li><NavLink to="integrations" onClick={closeMobile}>Integrations</NavLink></li>
+                        
+                        <li className="nav-actions">
+                            <a href='https://github.com/emeraldemperaur/vector-sigma' target='_blank' rel="noreferrer" className="action-link">
+                                <i className="fa-brands fa-github"></i>
+                            </a>
+                            <button onClick={() => { darkModeToggle(); closeMobile(); }} className="action-btn theme-toggle">
+                                <i className={darkMode ? 'fa-regular fa-lightbulb' : 'fa-regular fa-moon'}></i>
+                            </button>
+                        </li>
+                    </ul>
 
-}
+                    <button className="mobile-menu-btn" onClick={toggleMobile} aria-label="Open menu">
+                        <i className="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </header>
+    );
+};
 
 export default NavigationMenu;
