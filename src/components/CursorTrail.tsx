@@ -97,7 +97,7 @@ const CursorTrail = ({ darkMode }: { darkMode: boolean }) => {
         animationFrameId = requestAnimationFrame(loop);
       } else {
         cancelAnimationFrame(animationFrameId);
-        context.clearRect(0, 0, width, height); // Flush buffer to free memory
+        context.clearRect(0, 0, width, height); 
       }
     };
 

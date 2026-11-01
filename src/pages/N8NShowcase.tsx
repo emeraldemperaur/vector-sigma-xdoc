@@ -42,7 +42,6 @@ const N8NShowcase = ({darkMode}: {darkMode: boolean}) => {
             const timeTakenMs = (instance.timeSubmitted || Date.now()) - instance.timeCreated;
             console.log(`VΣ User finished the xForm in ${timeTakenMs / 1000} seconds.`)
             try {
-                    // Initiate HTTP POST request with stateful 'values' and 'instance' payload
                     await fetch(`https://airflow.apache.org/api/v2/dags/${instance.formObject.uuid}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -53,7 +52,6 @@ const N8NShowcase = ({darkMode}: {darkMode: boolean}) => {
                         })
                     });
                     
-                    // Reset form after HTTP POST request success and more (i.e. https://formik.org/docs/api/formik)
                     actions.resetForm(); 
                     alert("VΣ DAG Provisioning initiated!");
                 } catch (error) {

@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useRef, type ReactElement } from 'react';
-import { Box, Flex, Text } from '@radix-ui/themes';
+import React, { useState, useMemo, useRef, type ReactElement, useEffect } from 'react';
+import { Box, Flex } from '@radix-ui/themes';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -17,17 +17,14 @@ export interface TabSwitcherProps {
   darkMode?: boolean;
   defaultValue?: string;
   neonColor?: string;
-  children: ReactElement<TabItemProps> | ReactElement<TabItemProps>[];
-  /**
-   * * Optional height for the content display area.
-   * Default: '400px'
-   */
   contentHeight?: string | number;
+  formInstance?: any; 
+  children: ReactElement<TabItemProps> | ReactElement<TabItemProps>[];
 }
 
 export const TabItem: React.FC<TabItemProps> = () => null;
 
-const DataStreamParticles = ({ color }: { color: string }) => {
+const DataStreamParticles = ({ color, isActive }: { color: string; isActive: boolean }) => {
   const pointsRef = useRef<THREE.Points>(null);
   
   const particlesPosition = useMemo(() => {
@@ -41,7 +38,8 @@ const DataStreamParticles = ({ color }: { color: string }) => {
   }, []);
 
   useFrame((_, delta) => {
-    if (!pointsRef.current) return;
+    if (!pointsRef.current || !isActive) return;
+    
     const safeDelta = Math.min(delta, 0.1); 
     const attrs = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
     
@@ -54,6 +52,15 @@ const DataStreamParticles = ({ color }: { color: string }) => {
     attrs.needsUpdate = true;
     pointsRef.current.rotation.z += safeDelta * 0.1; 
   });
+
+  useEffect(() => {
+    return () => {
+      if (pointsRef.current) {
+        pointsRef.current.geometry.dispose();
+        (pointsRef.current.material as THREE.Material).dispose();
+      }
+    };
+  }, []);
 
   return (
     <points ref={pointsRef}>
@@ -77,11 +84,11 @@ const DataStreamParticles = ({ color }: { color: string }) => {
 };
 
 export const TabSwitcher = ({
-  design = 'outline',
   darkMode = false,
   defaultValue,
-  neonColor = '#00f3ff', 
-  contentHeight = '400px',
+  neonColor = '#023020', 
+  contentHeight = '650px',
+  formInstance,
   children
 }: TabSwitcherProps) => {
   
@@ -91,9 +98,7 @@ export const TabSwitcher = ({
 
   const [activeTab, setActiveTab] = useState<string>(defaultValue || tabs[0]?.props.value);
   const [renderedTab, setRenderedTab] = useState<string>(activeTab);
-  
   const [isTransitioning, setIsTransitioning] = useState(false); 
-  const [renderCanvas, setRenderCanvas] = useState(false);       
 
   const currentTabData = tabs.find((tab) => tab.props.value === renderedTab)?.props;
 
@@ -101,7 +106,6 @@ export const TabSwitcher = ({
     if (newValue === activeTab || isTransitioning) return;
     
     setIsTransitioning(true);
-    setRenderCanvas(true); 
     setActiveTab(newValue);
 
     setTimeout(() => {
@@ -110,40 +114,29 @@ export const TabSwitcher = ({
 
     setTimeout(() => {
       setIsTransitioning(false); 
-      
-      setTimeout(() => {
-        setRenderCanvas(false); 
-      }, 300);
-      
     }, 800);
   };
 
   const theme = useMemo(() => {
-    const isNeo = design === 'neumorphic';
-    const isOut = design === 'outline';
-    
     return {
-      bg: darkMode ? (isNeo ? '#1a1a1a' : '#0a0a0a') : (isNeo ? '#e0e5ec' : '#ffffff'),
-      text: darkMode ? '#ffffff' : '#111111',
-      mutedText: darkMode ? '#ffffff' : '#888888',
-      containerShadow: isNeo 
-        ? (darkMode ? '8px 8px 16px #0d0d0d, -8px -8px 16px #272727' : '8px 8px 16px #b8b9be, -8px -8px 16px #ffffff')
-        : (isOut ? `0 0 10px ${neonColor}33` : '0 4px 20px rgba(0,0,0,0.1)'),
-      containerBorder: isOut ? `1px solid ${neonColor}66` : 'none',
-      activeTabBg: isNeo 
-        ? (darkMode ? 'inset 4px 4px 8px #0d0d0d, inset -4px -4px 8px #272727' : 'inset 4px 4px 8px #b8b9be, inset -4px -4px 8px #ffffff')
-        : (isOut ? `${neonColor}22` : neonColor),
-      activeTabColor: isOut || isNeo ? neonColor : (darkMode ? '#000' : '#fff'),
-      activeTabBorder: isOut ? `1px solid ${neonColor}` : 'transparent',
+      bg: darkMode ? '#000000' : '#FAFAFA',
+      canvasBg: '#FFFFFF', 
+      text: darkMode ? '#F3F4F6' : '#111827',
+      mutedText: darkMode ? '#9CA3AF' : '#6B7280',
+      containerShadow: darkMode ? '0 12px 40px rgba(0,0,0,0.8)' : '0 12px 32px rgba(0,0,0,0.06)',
+      containerBorder: `1px solid ${darkMode ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
+      activeTabBg: darkMode ? 'rgba(255,255,255,0.1)' : '#FFFFFF',
+      activeTabColor: darkMode ? '#FFFFFF' : '#111827',
+      activeTabShadow: darkMode ? 'none' : '0 2px 8px rgba(0,0,0,0.06)',
     };
-  }, [design, darkMode, neonColor]);
+  }, [darkMode]);
 
   return (
     <Box 
       style={{ 
         width: '100%', 
         backgroundColor: theme.bg,
-        borderRadius: '12px',
+        borderRadius: '16px',
         boxShadow: theme.containerShadow,
         border: theme.containerBorder,
         overflow: 'hidden',
@@ -152,12 +145,30 @@ export const TabSwitcher = ({
         flexDirection: 'column'
       }}
     >
+      <style>
+        {`
+          .tab-content-scroll {
+            width: 100%; 
+            height: 100%;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 16px; 
+          }
+          /* WebKit Scrollbar Styling */
+          .tab-content-scroll::-webkit-scrollbar { width: 6px; }
+          .tab-content-scroll::-webkit-scrollbar-track { background: transparent; margin: 8px 0; }
+          .tab-content-scroll::-webkit-scrollbar-thumb { background: rgba(150, 150, 150, 0.4); border-radius: 10px; }
+        `}
+      </style>
+
       <Flex 
         justify="center" 
         style={{ 
-          padding: '8px', 
+          padding: '12px', 
           gap: '8px', 
-          borderBottom: `1px solid ${darkMode ? '#333' : '#eee'}`,
+          background: darkMode ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+          borderBottom: theme.containerBorder,
           overflowX: 'auto',
           zIndex: 20
         }}
@@ -169,18 +180,18 @@ export const TabSwitcher = ({
               key={tab.props.value}
               onClick={() => handleTabChange(tab.props.value)}
               style={{
-                padding: '10px 24px',
+                padding: '8px 20px',
                 cursor: 'pointer',
                 borderRadius: '8px',
                 background: isActive ? theme.activeTabBg : 'transparent',
                 color: isActive ? theme.activeTabColor : theme.mutedText,
-                border: isActive ? theme.activeTabBorder : '1px solid transparent',
-                transition: 'all 0.3s ease',
-                fontWeight: isActive ? 'bold' : 'normal',
-                textTransform: 'uppercase',
-                fontFamily: 'Libre Franklin',
-                letterSpacing: '1px',
-                fontSize: '12px',
+                boxShadow: isActive ? theme.activeTabShadow : 'none',
+                border: isActive && darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid transparent',
+                transition: 'all 0.25s ease',
+                fontWeight: isActive ? 600 : 400,
+                fontFamily: "'Libre Franklin', sans-serif",
+                fontSize: '13px',
+                letterSpacing: '0.02em',
                 whiteSpace: 'nowrap'
               }}
             >
@@ -190,59 +201,53 @@ export const TabSwitcher = ({
         })}
       </Flex>
 
-      <Box style={{ position: 'relative', width: '100%', minHeight: contentHeight, backgroundColor: '#000', flexGrow: 1 }}>
+      <Box style={{ position: 'relative', width: '100%', minHeight: contentHeight, backgroundColor: theme.canvasBg, flexGrow: 1 }}>
         <Box 
           style={{ 
             position: 'absolute', 
             inset: 0, 
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-            transition: 'opacity 0.4s ease, filter 0.4s ease',
+            padding: '24px 8px 24px 24px',
+            transition: 'opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease',
             opacity: isTransitioning ? 0 : 1,
             filter: isTransitioning ? `blur(8px)` : 'blur(0px)',
-            zIndex: 1
+            transform: isTransitioning ? 'scale(0.98)' : 'scale(1)',
+            zIndex: 2
           }}
         >
-          {currentTabData?.imageSrc && (
-            <img 
-              src={currentTabData.imageSrc} 
-              alt={currentTabData.label}
-              style={{ 
-                position: 'absolute', 
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'contain', 
-              }} 
-            />
-          )}
-
-          <Box style={{ position: 'relative', zIndex: 2, padding: '24px', width: '100%' }}>
-            {currentTabData?.children || (
-               <Text size="3" style={{ color: neonColor, textShadow: `0 0 10px ${neonColor}` }}>
-               </Text>
+          <div className="tab-content-scroll">
+            {formInstance ? (
+              <Box style={{ width: '100%', minHeight: '100%' }}>
+                {formInstance.render({ displayMode: currentTabData?.value, readOnlyMode: false })}
+              </Box>
+            ) : currentTabData?.imageSrc ? (
+              <img 
+                src={currentTabData.imageSrc} 
+                alt={currentTabData.label}
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+              />
+            ) : (
+              <Box style={{ width: '100%', minHeight: '100%' }}>{currentTabData?.children}</Box>
             )}
-          </Box>
+          </div>
         </Box>
 
         <Box
           style={{
             position: 'absolute',
             inset: 0,
-            zIndex: 10,
+            zIndex: 1,
             pointerEvents: 'none', 
             transition: 'opacity 0.3s ease',
             opacity: isTransitioning ? 1 : 0
           }}
         >
-          {renderCanvas && (
-            <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-              <DataStreamParticles color={neonColor} />
-            </Canvas>
-          )}
+          <Canvas 
+            camera={{ position: [0, 0, 5], fov: 75 }} 
+            frameloop={isTransitioning ? "always" : "demand"}
+          >
+            <DataStreamParticles color={neonColor} isActive={isTransitioning} />
+          </Canvas>
         </Box>
-
       </Box>
     </Box>
   );

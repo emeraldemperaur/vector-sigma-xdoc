@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Box, Flex, Text, IconButton } from '@radix-ui/themes';
+import React, { useState, useMemo, Suspense, lazy } from 'react';
+import { Box, Flex, Text } from '@radix-ui/themes';
 
 import { SiJavascript } from '@react-icons/all-files/si/SiJavascript';
 import { SiTypescript } from '@react-icons/all-files/si/SiTypescript';
@@ -11,57 +11,27 @@ import { SiJson } from '@react-icons/all-files/si/SiJson';
 import { FaTerminal } from '@react-icons/all-files/fa/FaTerminal';
 import { FaRegCopy } from '@react-icons/all-files/fa/FaRegCopy';
 import { FaCheck } from '@react-icons/all-files/fa/FaCheck';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+const loadSyntaxHighlighter = () =>
+  import("react-syntax-highlighter").then((module) => ({
+    default: module.Prism,
+  }));
+const LazySyntaxHighlighter = lazy(loadSyntaxHighlighter);
 
 export type CodeSnippetDesign = 'material' | 'neumorphic';
 
 export interface CodeSnippetProps {
-  /**
-   * * The raw string of code to display and copy.
-   * * @example
-   * code={`npm install @emeraldemperaur/vector-sigma`}
-   */
   code: string;
-  /**
-   * * The programming language or context of the snippet. 
-   * Used for the header title and to determine the icon.
-   * Supported auto-icons: javascript, typescript, react, python, html, css, json, bash, terminal, sh
-   * * @example
-   * language="typescript"
-   */
   language?: string;
-  /**
-   * * The design variation of the Code Snippet.
-   * Default: 'material'
-   */
   design?: CodeSnippetDesign;
-  /**
-   * * Forces Dark Mode styling on the component, regardless of global theme.
-   * Default: false
-   */
   darkMode?: boolean;
-  /**
-   * * Option to display the associated language icon in the header.
-   * Default: true
-   */
   languageIcon?: boolean;
-  /**
-   * * Optional max-height for the code block area. 
-   * Useful for very long code snippets. Enables vertical scrolling while pinning the header.
-   * * @example
-   * maxHeight="300px"
-   */
   maxHeight?: string | number;
-  /**
-   * * Optional CSS class name
-   */
   className?: string;
-  /**
-   * * Optional inline styles applied to the outer container
-   */
   style?: React.CSSProperties;
 }
 
-// Helper to map string languages to specific React Icons
 const getLanguageIcon = (lang: string, color: string) => {
   const normalized = lang.toLowerCase();
   const props = { size: 16, color };
@@ -75,7 +45,6 @@ const getLanguageIcon = (lang: string, color: string) => {
   if (['json'].includes(normalized)) return <SiJson {...props} />;
   if (['bash', 'sh', 'shell', 'terminal', 'cmd'].includes(normalized)) return <FaTerminal {...props} />;
   
-  // Default fallback icon
   return <FaTerminal {...props} />;
 };
 
@@ -101,54 +70,54 @@ export const CodeSnippet = ({
     }
   };
 
-  // --- THEME VARIABLES ---
   const themeVars = useMemo(() => {
     if (design === 'neumorphic') {
       return darkMode ? {
-        bg: '#1e1e1e',
-        headerBg: '#1e1e1e',
-        text: '#e0e0e0',
-        headerText: '#a0a0a0',
+        bg: 'rgba(30, 30, 35, 0.65)',
+        headerBg: 'rgba(0, 0, 0, 0.2)',
+        headerText: '#9ca3af',
         shadow: 'inset 5px 5px 10px #131313, inset -5px -5px 10px #292929',
-        border: 'none'
+        border: '1px solid rgba(255,255,255,0.08)'
       } : {
-        bg: '#e0e5ec',
-        headerBg: '#e0e5ec',
-        text: '#333333',
-        headerText: '#666666',
-        shadow: 'inset 6px 6px 12px #b8b9be, inset -6px -6px 12px #ffffff',
-        border: 'none'
+        bg: '#0B0D11', // SaaS Standard: Dark terminal bg for code
+        headerBg: '#F3F4F6',
+        headerText: '#4B5563',
+        shadow: 'inset 6px 6px 12px #e5e7eb, inset -6px -6px 12px #ffffff',
+        border: '1px solid rgba(0,0,0,0.05)'
       };
     }
 
-    // Material Design Default (MDBootstrap Style)
     return darkMode ? {
-      bg: '#212529', // Deep dark background for code
-      headerBg: '#343a40', // Slightly lighter header
-      text: '#f8f9fa',
-      headerText: '#adb5bd',
-      shadow: '0 4px 6px rgba(0,0,0,0.3)',
-      border: '1px solid #495057'
+      bg: 'rgba(15, 17, 21, 0.85)',
+      headerBg: 'rgba(255, 255, 255, 0.03)',
+      headerText: '#9CA3AF',
+      shadow: '0 12px 24px rgba(0,0,0,0.4)',
+      border: '1px solid rgba(255, 255, 255, 0.08)'
     } : {
-      bg: '#f8f9fa', // Very light gray background for code
-      headerBg: '#e9ecef', // Slightly darker header
-      text: '#212529',
-      headerText: '#6c757d',
-      shadow: '0 2px 4px rgba(0,0,0,0.05)',
-      border: '1px solid #dee2e6'
+      bg: '#0B0D11', 
+      headerBg: '#FFFFFF', 
+      headerText: '#4B5563',
+      shadow: '0 8px 24px rgba(0,0,0,0.08)',
+      border: '1px solid rgba(0,0,0,0.08)'
     };
   }, [design, darkMode]);
+
+  const normalizedLang = language.toLowerCase();
+  const prismLanguage = ['terminal', 'cmd', 'sh'].includes(normalizedLang) ? 'bash' : normalizedLang;
+  
+  const showLineNumbers = useMemo(() => code.split('\n').length > 5, [code]);
 
   return (
     <Box 
       className={className} 
       style={{ 
         width: '100%', 
-        borderRadius: design === 'neumorphic' ? '16px' : '8px',
-        overflow: 'hidden', // Clips the inner scrolling boxes nicely
+        borderRadius: '12px',
+        overflow: 'hidden',
         boxShadow: design === 'material' ? themeVars.shadow : 'none',
         border: themeVars.border,
         backgroundColor: themeVars.bg,
+        backdropFilter: 'blur(16px)',
         boxSizing: 'border-box',
         display: 'flex',
         flexDirection: 'column',
@@ -159,47 +128,62 @@ export const CodeSnippet = ({
         align="center" 
         justify="between" 
         style={{ 
-          padding: '8px 16px', 
+          width: '100%',
+          padding: '10px 16px', 
           backgroundColor: themeVars.headerBg,
           borderBottom: design === 'material' ? themeVars.border : 'none',
-          boxShadow: design === 'neumorphic' && !darkMode 
-            ? '4px 4px 8px #b8b9be, -4px -4px 8px #ffffff' 
-            : design === 'neumorphic' && darkMode 
-            ? '4px 4px 8px #131313, -4px -4px 8px #292929' 
-            : 'none',
           zIndex: 2 
         }}
       >
-        <Flex align="center" gap="2">
-          {languageIcon && getLanguageIcon(language, themeVars.headerText)}
-          <Text 
-            size="2" 
-            weight="bold" 
-            style={{ 
-              color: themeVars.headerText, 
-              textTransform: 'uppercase', 
-              letterSpacing: '0.05em',
-              userSelect: 'none'
-            }}
-          >
-            &nbsp;{language}
-          </Text>
+        <Flex align="center" gap="3">
+          <Box style={{ display: "flex", gap: "6px", marginRight: "8px" }}>
+            <div style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#FF5F56", border: "1px solid rgba(0,0,0,0.1)" }} />
+            <div style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#FFBD2E", border: "1px solid rgba(0,0,0,0.1)" }} />
+            <div style={{ width: "11px", height: "11px", borderRadius: "50%", background: "#27C93F", border: "1px solid rgba(0,0,0,0.1)" }} />
+          </Box>
+          
+          <Flex align="center" gap="2">
+            {languageIcon && getLanguageIcon(language, themeVars.headerText)}
+            <Text 
+              size="2" 
+              weight="medium" 
+              style={{ 
+                color: themeVars.headerText, 
+                fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+                letterSpacing: '0.02em',
+                userSelect: 'none'
+              }}
+            >
+              {language}
+            </Text>
+          </Flex>
         </Flex>
 
-        <IconButton 
-          variant="ghost" 
-          size="1" 
+        <button 
           onClick={handleCopy}
           title={copied ? "Copied!" : "Copy code"}
-          style={{ 
-            color: copied ? 'var(--green-9)' : themeVars.headerText, 
-            cursor: 'pointer',
-            transition: 'color 0.2s ease',
-            margin: 0
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            background: "transparent",
+            border: "none",
+            color: copied ? "#27C93F" : themeVars.headerText,
+            cursor: "pointer",
+            fontFamily: "'Libre Franklin', sans-serif",
+            fontSize: "12px",
+            fontWeight: 500,
+            transition: "all 0.2s ease",
+            padding: "4px 8px",
+            borderRadius: "6px",
+            outline: "none"
           }}
+          onMouseEnter={(e) => e.currentTarget.style.background = darkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)"}
+          onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
         >
-          {copied ? <FaCheck size={14} /> : <FaRegCopy size={14} />}
-        </IconButton>
+          {copied ? <FaCheck size={13} /> : <FaRegCopy size={13} />}
+          {copied ? "Copied" : "Copy"}
+        </button>
       </Flex>
 
       <Box 
@@ -209,24 +193,35 @@ export const CodeSnippet = ({
           maxHeight: maxHeight || 'auto',
           overflowX: 'auto',
           overflowY: maxHeight ? 'auto' : 'visible',
-          boxShadow: design === 'neumorphic' ? themeVars.shadow : 'none',
           boxSizing: 'border-box',
           flexGrow: 1
         }}
       >
-        <pre style={{ margin: 0, padding: 0, background: 'transparent' }}>
-          <code style={{ 
-            fontFamily: 'var(--code-font-family, "Consolas", "Monaco", "Courier New", monospace)',
-            fontSize: '14px',
-            lineHeight: 1.5,
-            color: themeVars.text,
-            whiteSpace: 'pre',
-            display: 'block',
-            minWidth: '100%'
-          }}>
+        <Suspense fallback={<Text size="2" style={{ color: themeVars.headerText }}>Loading syntax engine...</Text>}>
+          <LazySyntaxHighlighter 
+            language={prismLanguage} 
+            style={vscDarkPlus}
+            showLineNumbers={showLineNumbers}
+            lineNumberStyle={{
+              minWidth: '2.5em',
+              paddingRight: '1.2em',
+              color: '#6B7280',
+              opacity: 0.6,
+              textAlign: 'right',
+              userSelect: 'none'
+            }}
+            customStyle={{ 
+              margin: 0, 
+              padding: 0, 
+              background: 'transparent',
+              fontSize: '13.5px',
+              fontFamily: "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
+              lineHeight: 1.6
+            }}
+          >
             {code}
-          </code>
-        </pre>
+          </LazySyntaxHighlighter>
+        </Suspense>
       </Box>
     </Box>
   );

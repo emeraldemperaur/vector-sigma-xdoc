@@ -1,61 +1,81 @@
-import React from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 
 export interface ChromaticEmbedProps {
-  /**
-   * The Chromatic Storybook URL.
-   * Example: "https://<app-id>.chromatic.com/"
-   */
   src: string;
-  /**
-   * Title for iframe accessibility.
-   */
   title?: string;
-  /**
-   * Height of the iframe. Defaults to '100vh' to fill the viewport vertically 
-   * so Storybook can handle its own internal scrolling.
-   */
   height?: string | number;
-  /**
-   * Hide the left navigation sidebar. Perfect for embedding a single component.
-   */
   hideSidebar?: boolean;
+  darkMode?: boolean;
 }
 
 const ChromaticEmbed = ({ 
   src, 
   title = "VΣ Storybook Library", 
   height = "100vh",
-  hideSidebar = false
+  hideSidebar = false,
+  darkMode = false
 }: ChromaticEmbedProps) => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   
-  const embedUrl = React.useMemo(() => {
-    if (!hideSidebar) return src;
+  const embedUrl = useMemo(() => {
     const url = new URL(src);
-    url.searchParams.set('nav', '0');
+    if (hideSidebar) url.searchParams.set('nav', '0');
+    
+    url.searchParams.set('theme', darkMode ? 'dark' : 'light');
+    url.searchParams.set('globals', `theme:${darkMode ? 'dark' : 'light'}`);
+    
     return url.toString();
-  }, [src, hideSidebar]);
+  }, [src, hideSidebar]); 
+
+  useEffect(() => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      const themeString = darkMode ? 'dark' : 'light';
+      const updateGlobalsMsg = {
+        key: 'storybook-channel',
+        source: 'external-manager', 
+        from: 'external-manager',
+        event: {
+          type: 'updateGlobals',
+          args: [{ theme: themeString }],
+          source: 'external-manager', 
+          from: 'external-manager'
+        }
+      };
+      
+      const darkModeAddonMsg = {
+        key: 'storybook-channel',
+        source: 'external-manager',
+        from: 'external-manager',
+        event: {
+          type: 'DARK_MODE',
+          args: [darkMode],
+          source: 'external-manager',
+          from: 'external-manager'
+        }
+      };
+
+      iframeRef.current.contentWindow.postMessage(JSON.stringify(updateGlobalsMsg), '*');
+      iframeRef.current.contentWindow.postMessage(JSON.stringify(darkModeAddonMsg), '*');
+    }
+  }, [darkMode]);
 
   return (
     <div 
       style={{ 
         width: '100%', 
         height: height, 
-        overflowX: 'hidden', 
-        overflowY: 'hidden',
-        backgroundColor: 'var(--gray-2, #f8f9fa)'
+        overflow: 'hidden',
+        backgroundColor: darkMode ? '#0B0D11' : '#FAFAFA',
+        transition: 'background-color 0.3s ease'
       }}
     >
       <iframe
+        ref={iframeRef}
         src={embedUrl}
         title={title}
         width="100%"
         height="100%"
-        style={{
-          border: 'none',
-          display: 'block',
-          margin: 0,
-          padding: 0,
-        }}
+        style={{ border: 'none', display: 'block', margin: 0, padding: 0 }}
         allowFullScreen
         sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
       />

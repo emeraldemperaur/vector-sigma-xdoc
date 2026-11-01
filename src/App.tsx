@@ -12,6 +12,8 @@ import Integrations from "./pages/Integrations";
 import XFormComponent from "./pages/XFormComponent";
 import AirflowDAGShowcase from "./pages/AirflowShowcase";
 import N8NShowcase from "./pages/N8NShowcase";
+import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
 
@@ -33,6 +35,7 @@ function App() {
     >
      
      <NavigationMenu darkModeToggle={toggleDarkMode} darkMode={isDarkMode}/>
+     <ScrollToTop />
      <Routes>
         <Route path='/' element={<Maison darkMode={isDarkMode}/>}/>
         <Route path='documentation' element={<DocumentationViewer darkMode={isDarkMode}/>}/>
@@ -41,6 +44,7 @@ function App() {
         <Route path='showcase/n8n' element={<N8NShowcase darkMode={isDarkMode}/>}/>
         <Route path='showcase/airflow' element={<AirflowDAGShowcase darkMode={isDarkMode}/>}/>
         <Route path='integrations' element={<Integrations darkMode={isDarkMode}/>}/>
+        <Route path="*" element={<NotFound darkMode={isDarkMode} />} />
       </Routes>
       <FooterSection darkMode={isDarkMode}/>
     </Box> 
