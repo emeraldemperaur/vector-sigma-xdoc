@@ -5,20 +5,24 @@ import FeaturesRibbon from "../components/FeaturesRibbon";
 import InstallSection from "../components/InstallationSection";
 import IntegrationsSection from "../components/IntegrationsSection";
 import ProductRibbon from "../components/ProductRibbon";
+import n8n from '../assets/n8n-icon.png';
+import airflow from '../assets/airflow-icon.png';
+import watsonx from '../assets/watsonx-icon.png';
+import firefly from '../assets/firefly-icon.webp';
+import luma from '../assets/luma.png'
+import spacexsiDark from '../assets/spacex-dark-icon.png';
+import openaiDark from '../assets/openai-light.png';
+import speechify from '../assets/speechify-icon.png';
+import gemini from '../assets/gemini.png';
+import opentable from '../assets/opentable-icon.png';
+import notionDark from '../assets/notion-light.png';
+import salesforce from '../assets/salesforce-icon.png';
+import sap from '../assets/sap-icon.png';
+import uipath from '../assets/uipath-logo.png';
+import sanityDark from '../assets/sanity-dark.png';
+import formstack from '../assets/formstack.png';
 
-const Maison = ( {darkMode}: {darkMode: boolean}) => {
-    let n8nLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/N8n-logo-new.svg/1280px-N8n-logo-new.svg.png";
-    let watsonxLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/IBM_watsonx_logo.svg/1280px-IBM_watsonx_logo.svg.png";
-    let lumaAILogoUrl = "https://logos-world.net/wp-content/uploads/2024/11/Luma-Labs-Logo.png";
-    let xAILogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/XAI_Logo.svg/1280px-XAI_Logo.svg.png";
-    let notionLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png";
-    darkMode ? n8nLogoUrl = "https://raw.githubusercontent.com/lobehub/lobe-icons/refs/heads/master/packages/static-png/dark/n8n.png" : n8nLogoUrl = n8nLogoUrl
-    darkMode ? watsonxLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/1280px-IBM_logo.svg.png" : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/IBM_watsonx_logo.svg/1280px-IBM_watsonx_logo.svg.png";
-    darkMode ? lumaAILogoUrl = "https://www.silverside.ai/partner_logos/luma_white.png" : lumaAILogoUrl = lumaAILogoUrl;
-    darkMode ? xAILogoUrl = "https://raw.githubusercontent.com/lobehub/lobe-icons/refs/heads/master/packages/static-png/dark/xai.png" 
-    : "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/XAI_Logo.svg/1280px-XAI_Logo.svg.png";
-    darkMode ? notionLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png" 
-    : notionLogoUrl = notionLogoUrl;
+const Maison = ( {darkMode}: {darkMode: boolean}) => { 
 
     useEffect(()=>{
         document.body.style.backgroundColor = darkMode ? "#1b1c1d" : "#ffffff";
@@ -28,7 +32,7 @@ const Maison = ( {darkMode}: {darkMode: boolean}) => {
         <>
         <br/>
         <ProductRibbon darkMode={darkMode} title="V&Sigma;CTOR &Sigma;" subtitle="Declarative Form Engine"
-        description="Vector Sigma is a declarative form engine package for rapidly creating and managing the complex lifecycle of interactive extensible input forms 
+        description="Vector Sigma is a lightweight declarative form engine package for rapidly creating and managing the complex lifecycle of interactive extensible input forms 
         that can be easily embedded into a React front-end client interface for use in data pipelines, onboarding applications or automation workflows. 
         Customizable to fit seamlessly into an existing design system and enable agile developer control of the visual layer and theming." 
         icon={<i className="fa-brands fa-npm"></i>} />
@@ -52,67 +56,82 @@ const Maison = ( {darkMode}: {darkMode: boolean}) => {
         items={[
             {
                 integrationUrl: "https://n8n.io/",
-                integrationLogoUrl: n8nLogoUrl,
+                integrationLogoUrl: darkMode ? n8n : n8n,
                 integrationName: "N8N Automation"
             },
             {
                 integrationUrl: "https://airflow.apache.org/docs/apache-airflow/stable//stable-rest-api-ref.html",
-                integrationLogoUrl: "https://airflow.apache.org/docs/apache-airflow/1.10.15/_images/pin_large.png",
+                integrationLogoUrl: darkMode ? airflow : airflow,
                 integrationName: "Apache Airflow"
             },
             {
+                integrationUrl: "https://www.uipath.com/product/orchestrator",
+                integrationLogoUrl: darkMode ? uipath : uipath,
+                integrationName: "UiPath Orchestrator"
+            },
+            {
+                integrationUrl: "https://www.sanity.io/docs/http-reference",
+                integrationLogoUrl: darkMode ? sanityDark : sanityDark,
+                integrationName: "Sanity CMS API"
+            },
+            {
+                integrationUrl: "https://developers.formstack.com/reference/api-overview",
+                integrationLogoUrl: darkMode ? formstack : formstack,
+                integrationName: "Formstack API"
+            },
+            {
                 integrationUrl: "https://cloud.ibm.com/apidocs/watsonx-ai",
-                integrationLogoUrl: watsonxLogoUrl,
+                integrationLogoUrl: darkMode ? watsonx : watsonx,
                 integrationName: "Watsonx API"
             },
             {
                 integrationUrl: "https://developer.adobe.com/firefly-services/docs/firefly-api/api/",
-                integrationLogoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Adobe_Firefly_Logo.svg/960px-Adobe_Firefly_Logo.svg.png",
+                integrationLogoUrl: darkMode ? firefly : firefly,
                 integrationName: "Adobe Firefly"
             },
             {
                 integrationUrl: "https://docs.lumalabs.ai/docs/api",
-                integrationLogoUrl: lumaAILogoUrl,
+                integrationLogoUrl: darkMode ? luma : luma,
                 integrationName: "Luma AI API"
             },
             {
                 integrationUrl: "https://x.ai/api",
-                integrationLogoUrl: xAILogoUrl,
+                integrationLogoUrl: darkMode ? spacexsiDark : spacexsiDark,
                 integrationName: "xAI API"
             },
             {
                 integrationUrl: "https://developers.openai.com/api/docs",
-                integrationLogoUrl: "https://static.vecteezy.com/system/resources/previews/022/227/364/non_2x/openai-chatgpt-logo-icon-free-png.png",
+                integrationLogoUrl: darkMode ? openaiDark : openaiDark,
                 integrationName: "OpenAI API"
             },
             {
                 integrationUrl: "https://docs.speechify.ai/docs/get-started/overview",
-                integrationLogoUrl: "https://thriiver.co.uk/wp-content/uploads/Speechify-Logo@3.png",
+                integrationLogoUrl: darkMode ? speechify : speechify,
                 integrationName: "Speechify SIMBA"
             },
              {
                 integrationUrl: "https://ai.google.dev/gemini-api/docs",
-                integrationLogoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Google_Gemini_icon_2025.svg/250px-Google_Gemini_icon_2025.svg.png",
+                integrationLogoUrl: darkMode ? gemini : gemini,
                 integrationName: "Gemini API"
             },
             {
                 integrationUrl: "https://docs.opentable.com/",
-                integrationLogoUrl: "https://m.media-amazon.com/images/I/51SdVVc+rBL._h1_.png",
+                integrationLogoUrl: darkMode ? opentable : opentable,
                 integrationName: "OpenTable API"
             },
             {
                 integrationUrl: "https://developers.notion.com/reference/intro",
-                integrationLogoUrl: notionLogoUrl,
+                integrationLogoUrl: darkMode ? notionDark : notionDark,
                 integrationName: "Notion API"
             },
             {
                 integrationUrl: "https://developer.salesforce.com/docs/apis",
-                integrationLogoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Salesforce.com_logo.svg/3840px-Salesforce.com_logo.svg.png",
+                integrationLogoUrl: darkMode ? salesforce : salesforce,
                 integrationName: "Salesforce REST API"
             },
             {
                 integrationUrl: "https://api.sap.com/",
-                integrationLogoUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/SAP_2011_logo.svg/3840px-SAP_2011_logo.svg.png",
+                integrationLogoUrl: darkMode ? sap : sap,
                 integrationName: "SAP ERP API"
             }
 

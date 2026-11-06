@@ -9,7 +9,8 @@ import firefly from '../assets/firefly-icon.webp';
 import luma from '../assets/luma.png'
 import spacexsiLight from '../assets/spacex-light-icon.png';
 import spacexsiDark from '../assets/spacex-dark-icon.png';
-import openai from '../assets/openai.png';
+import openaiLight from '../assets/openai-dark.png';
+import openaiDark from '../assets/openai-light.png';
 import speechify from '../assets/speechify-icon.png';
 import gemini from '../assets/gemini.png';
 import opentable from '../assets/opentable-icon.png';
@@ -18,6 +19,9 @@ import notionDark from '../assets/notion-light.png';
 import salesforce from '../assets/salesforce-icon.png';
 import sap from '../assets/sap-icon.png';
 import uipath from '../assets/uipath-logo.png';
+import sanityLight from '../assets/sanity-light.png';
+import sanityDark from '../assets/sanity-dark.png';
+import formstack from '../assets/formstack.png';
 
 
 const Integrations = ({ darkMode }: { darkMode: boolean }) => {
@@ -57,6 +61,16 @@ const Integrations = ({ darkMode }: { darkMode: boolean }) => {
       integrationName: "Apache Airflow"
     },
     {
+      integrationUrl: "https://www.sanity.io/docs/http-reference",
+      integrationLogoUrl: darkMode ? sanityDark : sanityLight,
+      integrationName: "Sanity CMS API"
+    },
+    {
+      integrationUrl: "https://developers.formstack.com/reference/api-overview",
+      integrationLogoUrl: darkMode ? formstack : formstack,
+      integrationName: "Formstack API"
+    },
+    {
       integrationUrl: "https://cloud.ibm.com/apidocs/watsonx-ai",
       integrationLogoUrl: watsonx,
       integrationName: "Watsonx API"
@@ -82,7 +96,7 @@ const Integrations = ({ darkMode }: { darkMode: boolean }) => {
     },
     {
       integrationUrl: "https://developers.openai.com/api/docs",
-      integrationLogoUrl: openai,
+      integrationLogoUrl: darkMode ? openaiDark : openaiLight,
       integrationName: "OpenAI API"
     },
     {

@@ -18,7 +18,7 @@ const HeroGlobe = ({ darkMode = true }: HeroGlobeProps) => {
     let isPausedByWatchdog = false;
 
     const nav = typeof navigator !== "undefined" ? (navigator as any) : {};
-    const deviceMemory = nav.deviceMemory || 8; // Available RAM in GB (Chromium)
+    const deviceMemory = nav.deviceMemory || 8; 
     const cpuCores = nav.hardwareConcurrency || 4;
     const isMobile = typeof window !== "undefined" ? window.innerWidth <= 768 : false;
     const isLowPower = deviceMemory <= 4 || cpuCores <= 4 || isMobile;
@@ -121,7 +121,7 @@ const HeroGlobe = ({ darkMode = true }: HeroGlobeProps) => {
 
           const sceneLayer = new SceneLayer({
             url: "https://tiles.arcgis.com/tiles/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Airports_PointSceneLayer/SceneServer/layers/0",
-            definitionExpression: "type_airport IN (3)",
+            definitionExpression: "type_airport IN (0)",
             renderer: {
               type: "simple",
               symbol: { type: "point-3d", symbolLayers: [{ type: "icon", size: 1.8 }] },

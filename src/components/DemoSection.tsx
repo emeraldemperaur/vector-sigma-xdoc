@@ -154,7 +154,7 @@ export const N8NShowcase = () => {
 
           .face-back {
             transform: rotate3d(3, 10, 6, 180deg);
-            background: ${darkMode ? "rgba(20, 20, 25, 0.65)" : "rgba(255, 255, 255, 0.65)"};
+            background: ${darkMode ? "rgba(20, 20, 25, 0.65)" : "#000000"};
             backdrop-filter: blur(24px) saturate(150%);
             -webkit-backdrop-filter: blur(24px) saturate(150%);
             border: 1px solid ${darkMode ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.1)"};
@@ -165,7 +165,7 @@ export const N8NShowcase = () => {
           }
           .mac-header {
             display: flex; align-items: center; padding: 16px 20px;
-            background: ${darkMode ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.4)"};
+            background: ${darkMode ? "rgba(0,0,0,0.3)" : "#fff"};
             border-bottom: 1px solid ${darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"};
             gap: 8px;
           }
@@ -462,13 +462,13 @@ export const N8NShowcase = () => {
                 <div className="mac-btn mac-close" onClick={() => setViewMode("render")} title="Close Code View" />
                 <div className="mac-btn mac-min" />
                 <div className="mac-btn mac-max" />
-                <Text size="2" style={{ marginLeft: "8px", color: defaultText, fontWeight: 500 }}>
+                <Text size="2" style={{ marginLeft: "8px", color: defaultText, fontWeight: 500, fontFamily: 'JetBrains Mono' }}>
                   VectorSigma_Implementation.tsx
                 </Text>
               </div>
               <Box style={{ flexGrow: 1, overflow: "auto", padding: "16px", backgroundColor: "rgba(0,0,0,0.4)" }}>
                 <Suspense fallback={<Text size="2" style={{ color: "#9ca3af" }}>Loading syntax engine...</Text>}>
-                  <LazySyntaxHighlighter language="tsx" style={vscDarkPlus} customStyle={{ margin: 0, padding: 0, background: "transparent", fontSize: "13px", fontFamily: "'JetBrains Mono', 'Fira Code', monospace" }}>
+                  <LazySyntaxHighlighter language="tsx" style={vscDarkPlus} customStyle={{ margin: 0, padding: 0, background: "transparent", fontSize: "13px", fontFamily: 'JetBrains Mono' }}>
                     {vectorSigmaCode}
                   </LazySyntaxHighlighter>
                 </Suspense>

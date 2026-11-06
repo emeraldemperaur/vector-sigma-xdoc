@@ -59,7 +59,7 @@ const XFormComponent = ({ darkMode }: { darkMode: boolean }) => {
               marginTop: "23px"
             }}
           >
-            Form Components
+            χForm Components
           </Heading>
           <Text 
             as="p" 

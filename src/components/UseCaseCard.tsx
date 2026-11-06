@@ -167,7 +167,7 @@ export const UseCaseCard = ({
               style={{
                 width: '100%',
                 height: contentHeight,
-                backgroundColor: darkMode ? '#0B0D11' : '#F9FAFB',
+                backgroundColor: darkMode ? '#0B0D11' : '#000000',
                 border: themeVars.containerBorder,
                 borderRadius: '16px',
                 overflow: 'hidden',
@@ -199,7 +199,8 @@ export const UseCaseCard = ({
               </Flex>
 
               <Box style={{ flexGrow: 1, padding: '16px', overflowY: 'auto' }}>
-                <Suspense fallback={<Text size="2" style={{ color: themeVars.subText }}>Loading syntax engine...</Text>}>
+                <Suspense fallback={
+                  <Text size="2" style={{fontFamily: "'JetBrains Mono', 'Fira Code', monospace", color: themeVars.subText }}>Loading syntax engine...</Text>}>
                   <LazySyntaxHighlighter 
                     language="typescript" 
                     style={vscDarkPlus} 

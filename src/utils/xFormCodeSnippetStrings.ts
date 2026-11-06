@@ -754,7 +754,7 @@ interface VΣRegistrationForm {
 export const VΣRegistrationForm = () => {
     
     // Optionally pass the interface into the hook to apply <T> typing to 'values'
-    // const xFormBuilder = useVectorSigma<VΣRegistrationForm>(apiXFormData); 
+    const xFormBuilder = useVectorSigma<VΣRegistrationForm>(apiXFormData) 
         .setName('VΣ Registration Form')
         .setBrand("brandHexColor", "www.exampleurl.com/logoimage.png", 'right');
     return xFormBuilder.render({
