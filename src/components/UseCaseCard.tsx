@@ -95,7 +95,7 @@ export const UseCaseCard = ({
           <Text size="2" weight="bold" style={{ color: themeVars.accent, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: "'Libre Franklin', sans-serif" }}>
             {useCaseLabel}
           </Text>
-          <Text size="6" weight="bold" style={{ color: themeVars.text, fontFamily: "'Libre Baskerville', serif", letterSpacing: "-0.01em" }}>
+          <Text size="6" weight="bold" style={{ color: '#56585b', fontFamily: "'Libre Baskerville', serif", letterSpacing: "-0.01em" }}>
             {useCaseDescription}
           </Text>
           {useCaseSynopsis && (
