@@ -10,9 +10,6 @@ import wealthsimpleIcon from '../assets/wealthsimple-icon.jpg';
 import aircanadaIcon from '../assets/aircanada-icon.png';
 import louvreWallpaper from '../assets/paris-wallpaper.jpg';
 
-
-
-
 const loadSyntaxHighlighter = () => 
   import("react-syntax-highlighter").then((module) => ({
     default: module.Prism,
@@ -37,7 +34,7 @@ const CodeDemoSection = ({ darkMode = true }: DemoSectionProps) => {
   const defaultHeadingText = darkMode ? "#f9fafb" : "#111827";
 
   const xFormBuilder = useVectorSigma(xFormN8NPrototypeData)
-    .setName('Apache Airflow DAG Provisioning')
+    .setName('N8N Reservation Booking')
     .setBrand("#800020", "", 'right');
 
   useEffect(() => {
@@ -80,8 +77,8 @@ import { xFormN8NPrototypeData } from './mockData';
 
 export const N8NShowcase = () => {
     const xFormBuilder = useVectorSigma(xFormN8NPrototypeData)
-        .setName('Apache Airflow DAG Provisioning')
-        .setBrand("#800020", "", 'right');
+        .setName('N8N Reservation Booking')
+        .setBrand("#EA4B71", "", 'right');
 
     return xFormBuilder.render({
         displayMode: 'codex',
@@ -90,20 +87,22 @@ export const N8NShowcase = () => {
             const timeTakenMs = (instance.timeSubmitted || Date.now()) - instance.timeCreated;
             console.log(\`Finished in \${timeTakenMs / 1000} seconds.\`);
             
-           try {
-                await fetch(\`/api/dags/\${instance.formObject.uuid}\`, {
+            try {
+                // Dispatch payload to an N8N Webhook trigger
+                await fetch('https://your-n8n-instance.com/webhook/reservation-booking', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        dag_id: instance.formObject.uuid,
-                        dagPayload: values
+                        reservationId: instance.formObject.uuid,
+                        timestamp: instance.timeSubmitted,
+                        guestData: values
                     })
                 });
                 actions.resetForm(); 
-                alert("VΣ DAG Provisioning initiated!");
-               } catch (error) {
-                  console.error("Failed to provision", error);
-               }
+                alert("N8N Reservation Workflow Triggered!");
+            } catch (error) {
+                console.error("Failed to trigger N8N workflow", error);
+            }
         }
     });
 };`;
@@ -427,19 +426,20 @@ export const N8NShowcase = () => {
                                 const timeTakenMs = (instance.timeSubmitted || Date.now()) - instance.timeCreated;
                                 console.log(`VΣ User finished the xForm in ${timeTakenMs / 1000} seconds.`);
                                 try {
-                                  await fetch(`https://airflow.apache.org/api/v2/dags/${instance.formObject.uuid}`, {
+                                  await fetch(`https://your-n8n-instance.com/webhook/reservation-booking`, {
                                     method: 'POST',
+                                    mode: 'no-cors',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({
-                                      dag_id: instance.formObject.uuid,
-                                      dag_run_id: instance.formObject.uuid,
-                                      dagPayload: values
+                                      reservationId: instance.formObject.uuid,
+                                      timestamp: instance.timeSubmitted,
+                                      guestData: values
                                     })
                                   });
                                   actions.resetForm(); 
-                                  alert("VΣ DAG Provisioning initiated!");
+                                  alert("N8N Reservation Workflow Triggered!");
                                 } catch (error) {
-                                  console.error("Failed to initialize VΣ DAG Provisioning", error);
+                                  console.error("Failed to trigger N8N workflow", error);
                                 }
                               },
                             })}

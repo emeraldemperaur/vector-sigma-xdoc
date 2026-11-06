@@ -729,10 +729,10 @@ import { xFormN8NSchema } from './xFormN8NSchema';
 export const App = () => {
   const xFormBuilder = new VectorSigma(xFormN8NSchema)
     .setName('N8N Reservation Booking')
-    .setBrand("#EA4B71", "", 'right')
+    .setBrand("#800020", "", 'right')
     
   return xFormBuilder.render({ 
-    displayMode: 'accordion',
+    displayMode: 'codex',
     readOnlyMode: false,
     async onSubmit(values, actions, instance) {
       console.log(\`xForm InProgress Timestamp:\`, instance.timeInProgress);
