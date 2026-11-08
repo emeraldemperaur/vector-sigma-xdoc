@@ -9,7 +9,7 @@ const XFormComponent = ({ darkMode }: { darkMode: boolean }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLinkHovered, setIsLinkHovered] = useState(false);
 
-  const storybookUrl = "https://69ae1e2c772d79457e37fbad-ivjtqzruax.chromatic.com/";
+  const storybookUrl = "https://69ae1e2c772d79457e37fbad-vnnbfkvqja.chromatic.com/";
 
   useEffect(() => {
     document.body.style.backgroundColor = darkMode ? "#000000" : "#FAFAFA";
